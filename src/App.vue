@@ -7,7 +7,7 @@
         <button class="pure-button search-btn" @click="switchUrl">Play !</button>
       </div>
       <div class="player" ref="player">
-        <div class="title" v-show="title !== null">标题：{{title}}</div>
+        <div class="title" v-show="title !== null">{{title}}</div>
         <div id="xg"></div>
       </div>
     </div>
@@ -46,13 +46,12 @@ export default {
     getParam (name) {
       let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
       let r = window.location.search.substr(1).match(reg)
-      if (r !== null) return unescape(r[2])
+      if (r !== null) return decodeURI(r[2])
       return null
     },
     getUrl () {
       this.url = this.getParam('url')
-      let t = this.getParam('title')
-      this.title = encodeURI(t)
+      this.title = this.getParam('title')
       if (this.url) {
         this.playUrl(this.url)
         this.url = null
@@ -68,6 +67,7 @@ export default {
           this.$refs.player.appendChild(div)
           this.playUrl(this.url)
           this.url = null
+          this.title = null
           clearTimeout(timer)
         }, 0)
       }

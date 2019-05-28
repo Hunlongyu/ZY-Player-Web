@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.f22d594647dfe7cedb3467047d034a01.js"
+  "precache-manifest.15e172ac5204624d2b51f701e0611b0c.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "m3u8_player"});

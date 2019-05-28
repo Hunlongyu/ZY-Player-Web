@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: 'https://raw.githubusercontent.com/Hunlongyu/m3u8_player/master/docs',
+  publicPath: '/',
   outputDir: 'docs',
   productionSourceMap: false
 }

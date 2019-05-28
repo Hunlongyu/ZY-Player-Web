@@ -7,31 +7,32 @@
         <button class="pure-button search-btn" @click="switchUrl">Play !</button>
       </div>
       <div class="player" ref="player">
+        <div class="title" v-show="title !== null">标题：{{title}}</div>
         <div id="xg"></div>
       </div>
     </div>
     <div class="pure-u-1-5">
-      <div class="about">About</div>
+      <div class="aboutBtn" @click="openAbout">=</div>
     </div>
-    <about />
+    <about ref="about" />
   </div>
 </template>
 <script>
 import 'xgplayer'
 import Hls from 'xgplayer-hls.js'
 import about from './components/about'
-import { setTimeout } from 'timers';
 export default {
   name: 'app',
   data () {
     return {
       xg: null,
       url: null,
+      title: null,
       config: {
         id: 'xg',
         url: null,
         fluid: true,
-        autoplay: true,
+        autoplay: false,
         keyShortcut: 'on',
         defaultPlaybackRate: 1,
         playbackRate: [0.5, 0.75, 1, 1.5, 2]
@@ -42,25 +43,46 @@ export default {
     about
   },
   methods: {
-    switchUrl () {
-      if (this.xg) {
-        this.xg.destroy()
-      }
-      let timerOne = setTimeout(() => {
-        this.xg =null
-        this.config.url = this.url
-        let div = document.createElement('div')
-        div.id = 'xg'
-        this.$refs.player.appendChild(div)
-        this.xg = new Hls(this.config)
+    getParam (name) {
+      let reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)', 'i')
+      let r = window.location.search.substr(1).match(reg)
+      if (r !== null) return unescape(r[2])
+      return null
+    },
+    getUrl () {
+      this.url = this.getParam('url')
+      this.title = this.getParam('title')
+      if (this.url) {
+        this.playUrl(this.url)
         this.url = null
-      }, 0)
+      }
+    },
+    switchUrl () {
+      if (this.url && this.xg) {
+        this.xg.destroy()
+        let timer = setTimeout(() => {
+          this.xg = null
+          let div = document.createElement('div')
+          div.id = 'xg'
+          this.$refs.player.appendChild(div)
+          this.playUrl(this.url)
+          this.url = null
+          clearTimeout(timer)
+        }, 0)
+      }
+    },
+    playUrl (url) {
+      if (url) {
+        this.config.url = url
+        this.xg = new Hls(this.config)
+      }
+    },
+    openAbout () {
+      this.$refs.about.show = true
     }
   },
   mounted () {
-    this.config.url = 'https://bili.meijuzuida.com/20190131/1249_b02f356f/index.m3u8'
-    this.config.url = 'https://iqiyi.qq-zuidazy.com/20190102/4121_f38c099c/index.m3u8'
-    this.xg = new Hls(this.config)
+    this.getUrl()
   }
 }
 </script>
@@ -78,6 +100,22 @@ export default {
   }
   .player{
     margin-top: 20px;
+    #xg{
+      margin-top: 6px;
+    }
+  }
+  .aboutBtn{
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    padding: 0.6em 1em;
+    cursor: pointer;
+    border-radius: 2px;
+    background-color: #eee;
+    user-select: none;
+    &:hover{
+      background-color: #e6e6e6;
+    }
   }
 }
 </style>

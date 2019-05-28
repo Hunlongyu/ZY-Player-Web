@@ -51,7 +51,8 @@ export default {
     },
     getUrl () {
       this.url = this.getParam('url')
-      this.title = this.getParam('title')
+      let t = this.getParam('title')
+      this.title = encodeURI(t)
       if (this.url) {
         this.playUrl(this.url)
         this.url = null

@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         m3u8 资源播放助手
-// @version      0.1
+// @version      0.2
 // @author       Hunlongyu
 // @namespace    https://github.com/Hunlongyu/m3u8_player
 // @description  自动匹配 m3u8 资源，点击播放，即跳转到播放器页面。
@@ -15,13 +15,13 @@
   'use strict';
 
   // code here
-  function getTitle () {    // 获取页面标题
+  function getTitle () { // 获取页面标题
     if (document.title) {
       return document.title
     }
     return null
   }
-  function getUrl () {      // 获取 m3u8 的链接
+  function getUrl () { // 获取 m3u8 的链接
     let list = document.querySelectorAll("input[name*='copy_']")
     let url = null
     for (let i = 0; i < list.length; i++) {

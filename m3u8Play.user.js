@@ -11,8 +11,8 @@
 // @match        http://www.1977zy.com/*
 // @grant        none
 // ==/UserScript==
-(function() {
-  'use strict';
+(function () {
+  'use strict'
 
   // code here
   function getTitle () { // 获取页面标题
@@ -25,7 +25,7 @@
     let list = document.querySelectorAll("input[name*='copy_']")
     let url = null
     for (let i = 0; i < list.length; i++) {
-      let j = list[i].value;
+      let j = list[i].value
       if (j.indexOf('m3u8') !== -1) {
         url = `<a href="http://m3u8.hunlongyu.fun/?url=${j}&title=${getTitle()}" target="_blank">${list[i].parentNode.textContent}</a>`
         list[i].parentNode.innerHTML = url
@@ -33,4 +33,4 @@
     }
   }
   getUrl()
-})();
+})()

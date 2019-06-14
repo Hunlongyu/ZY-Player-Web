@@ -4,7 +4,7 @@
       <div class="close" @click="close">+</div>
       <h3>使用方式：</h3>
       <p>第一种：直接在输入框内填写正确的 m3u8 视频链接，按回车键或者点击 Play ! 按钮，即可缓冲播放视频。</p>
-      <p>第二种：配合 <a href="" target="_blank">m3u8资源助手</a> 脚本使用。需要安装 Tampermonkey 浏览器扩展插件。推荐这种！</p>
+      <p>第二种：配合 <a href="https://greasyfork.org/zh-CN/scripts/383642-m3u8-%E8%B5%84%E6%BA%90%E6%92%AD%E6%94%BE%E5%8A%A9%E6%89%8B" target="_blank">m3u8资源助手</a> 脚本使用。需要安装 Tampermonkey 浏览器扩展插件。推荐这种！</p>
       <h3>资源网站：</h3>
       <p><a href="http://zuidazy.net/" target="_blank">最大资源网：http://zuidazy.net/</a></p>
       <p><a href="http://www.okzyw.com/" target="_blank">OK资源网：http://www.okzyw.com/</a></p>

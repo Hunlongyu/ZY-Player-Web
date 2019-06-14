@@ -1,7 +1,8 @@
 // ==UserScript==
 // @name         m3u8 资源播放助手
-// @version      0.2
+// @version      0.3
 // @author       Hunlongyu
+// @icon         https://i.loli.net/2019/04/22/5cbd720718fdb.png
 // @namespace    https://github.com/Hunlongyu/m3u8_player
 // @description  自动匹配 m3u8 资源，点击播放，即跳转到播放器页面。
 // @lilcense     WTFPL

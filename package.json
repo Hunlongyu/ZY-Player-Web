@@ -11,8 +11,9 @@
     "core-js": "^2.6.5",
     "purecss": "^1.0.0",
     "vue": "^2.6.10",
-    "xgplayer": "^1.1.5",
-    "xgplayer-hls.js": "^1.1.6"
+    "xgplayer": "^2.1.2",
+    "xgplayer-hls.js": "^1.1.6",
+    "xgplayer-logger": "^1.1.5"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

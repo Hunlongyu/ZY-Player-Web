@@ -1,6 +1,6 @@
 {
   "name": "m3u8_player",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "core-js": "^2.6.5",
-    "purecss": "^1.0.0",
+    "material-icons": "^0.3.1",
     "vue": "^2.6.10",
+    "vuesax": "^3.9.0",
     "xgplayer": "^2.1.2",
-    "xgplayer-hls.js": "^1.1.6",
-    "xgplayer-logger": "^1.1.5"
+    "xgplayer-hls.js": "^1.1.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

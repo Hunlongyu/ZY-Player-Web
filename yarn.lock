@@ -5211,6 +5211,11 @@ map-visit@^1.0.0:
   dependencies:
     object-visit "^1.0.0"
 
+material-icons@^0.3.1:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/material-icons/-/material-icons-0.3.1.tgz#425e06e2448632d6249d6e1ffe2993682c5b171e"
+  integrity sha512-5Hbj76A6xDPcDZEbM4oxTknhWuMwGWnAHVLLPCEq9eVlcHb0fn4koU9ZeyMy1wjARtDEPAHfd5ZdL2Re5hf0zQ==
+
 md5.js@^1.3.4:
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/md5.js/-/md5.js-1.3.5.tgz#b5d07b8e3216e3e27cd728d72f70d1e6a342005f"
@@ -6679,11 +6684,6 @@ punycode@^2.1.0, punycode@^2.1.1:
   version "2.1.1"
   resolved "https://registry.yarnpkg.com/punycode/-/punycode-2.1.1.tgz#b58b010ac40c22c5657616c8d2c2c02c7bf479ec"
   integrity sha512-XRsRjdf+j5ml+y/6GKHPZbrF/8p2Yga0JPtdqTIY2Xe5ohJPD9saDJJLPvp9+NSBprVvevdXZybnj2cv8OEd0A==
-
-purecss@^1.0.0:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/purecss/-/purecss-1.0.1.tgz#c83d84326a10beb5c3b36d20c0254e946e5568a7"
-  integrity sha512-mTUc5ZzpzafswEhCmTDfSRMMyRFdLYdd+KywMwnBC/MuA/Th7jug2z0Xso4WkxvtxoU/BS9aRb7WnBNyuA7YJQ==
 
 q@^1.1.2:
   version "1.5.1"
@@ -8349,10 +8349,18 @@ vue-template-es2015-compiler@^1.9.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.9.1.tgz#1ee3bc9a16ecbf5118be334bb15f9c46f82f5825"
   integrity sha512-4gDntzrifFnCEvyoO8PqyJDmguXgVPxKiIxrBKjIowvL9l+N66196+72XVYR8BBf1Uv1Fgt3bGevJ+sEmxfZzw==
 
-vue@^2.6.10:
+vue@^2.6.10, vue@^2.6.9:
   version "2.6.10"
   resolved "https://registry.npm.taobao.org/vue/download/vue-2.6.10.tgz#a72b1a42a4d82a721ea438d1b6bf55e66195c637"
   integrity sha1-pysaQqTYKnIepDjRtr9V5mGVxjc=
+
+vuesax@^3.9.0:
+  version "3.9.0"
+  resolved "https://registry.yarnpkg.com/vuesax/-/vuesax-3.9.0.tgz#4283b70889c9e501dfe0a6b5bddc75ebccde7b89"
+  integrity sha512-QEtkCQYC6hNlPstkIh2douVq7mzH5WP2/L+EVkBiu+hkcr4GGPRWU2oHEH/LCf+yGssYJowy3JDsXRqpimQqbw==
+  dependencies:
+    chalk "^2.4.2"
+    vue "^2.6.9"
 
 watchpack@^1.5.0:
   version "1.6.0"
@@ -8600,11 +8608,6 @@ xgplayer-hls.js@^1.1.6:
     deepmerge "^2.0.1"
     event-emitter "^0.3.5"
     hls.js "^0.11.0"
-
-xgplayer-logger@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/xgplayer-logger/-/xgplayer-logger-1.1.5.tgz#c00098d40d1b75d6c43fa6504f4f9f6ed3c56b6c"
-  integrity sha512-Xy7cmfxrtgUv9Sn/n9z1/dxwIXV6qcoYALoLMS3uX1ewPE8dt7uMSVovgZ+y8iyVUvXFhebaVGg/nA3VlSMLxQ==
 
 xgplayer@^2.1.2:
   version "2.1.2"

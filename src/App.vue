@@ -144,6 +144,7 @@ html,body,#app{
   .menu, .inclusive{
     margin-top: 20px;
     cursor: pointer;
+    height: 26px;
   }
   .sidebarx{
     h3, h4, p{

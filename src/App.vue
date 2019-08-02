@@ -28,7 +28,6 @@ export default {
       xg: null,
       url: null,
       title: null,
-      format: null,
       config: {
         id: 'xg',
         url: null,
@@ -53,7 +52,6 @@ export default {
     getUrl () {
       this.url = this.getParam('url')
       this.title = this.getParam('title')
-      this.format = this.getParam('format')
       if (this.url) {
         this.playUrl(this.url)
         this.url = null
@@ -75,12 +73,11 @@ export default {
       }
     },
     playUrl (url) {
-      if (this.format === 'mp4') {
-        this.config.url = url
+      this.config.url = url
+      if (url.indexOf('mp4') !== -1) {
         this.xg = new Player(this.config)
       }
-      if (this.format === 'm3u8') {
-        this.config.url = url
+      if (url.indexOf('m3u8') !== -1) {
         this.xg = new Hls(this.config)
       }
       _hmt.push(['_trackEvent', 'video', 'play', this.title, url])

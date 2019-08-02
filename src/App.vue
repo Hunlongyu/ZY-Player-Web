@@ -70,6 +70,9 @@ export default {
           this.title = null
           clearTimeout(timer)
         }, 0)
+      } else {
+        this.playUrl(this.url)
+        this.url = null
       }
     },
     playUrl (url) {

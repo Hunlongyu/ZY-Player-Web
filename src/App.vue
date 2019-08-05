@@ -116,19 +116,15 @@ export default {
     },
     switchEvent () {
       if (this.xg) {
+        this.playing = !this.playing
         this.xg.destroy()
         let timer = setTimeout(() => {
           this.xg = null
-          let div = document.createElement('div')
-          div.id = 'xg'
-          this.$refs.playBox.appendChild(div)
-          this.playUrl(this.url)
           this.url = null
           this.title = null
           clearTimeout(timer)
         }, 10)
       }
-      this.playing = !this.playing
     }
   },
   mounted () {

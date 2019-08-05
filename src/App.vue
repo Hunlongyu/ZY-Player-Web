@@ -121,7 +121,7 @@ export default {
           this.xg = null
           let div = document.createElement('div')
           div.id = 'xg'
-          this.$refs.player.appendChild(div)
+          this.$refs.playBox.appendChild(div)
           this.playUrl(this.url)
           this.url = null
           this.title = null

@@ -11,11 +11,15 @@
       <h4>资源网站：</h4>
       <p class="alink"><a href="http://zuidazy.net/">最大资源网</a></p>
       <p class="alink"><a href="http://www.okzyw.com/">OK资源网</a></p>
-      <p class="alink"><a href="http://www.172zy.net/">172资源网</a></p>
-      <p class="alink"><a href="http://www.1977zy.com/">1977资源网</a></p>
+      <p class="alink"><a href="http://www.subo988.com/">速播资源网</a></p>
+      <p class="alink"><a href="http://www.123ku.com/">123资源站</a></p>
+      <p class="alink"><a href="http://131zy.vip/">看看资源</a></p>
+      <p class="alink"><a href="https://www.baiwanzy.com">百万资源</a></p>
       <h4>使用说明：</h4>
       <p>方式一：直接在输入框内，粘贴正确的视频资源链接，敲击回车键，即可自动缓冲播放。</p>
       <p>方式二：配合 <a href="https://greasyfork.org/zh-CN/scripts/383642-%E5%B0%8F%E5%8A%A9%E6%89%8B-%E8%B5%84%E6%BA%90%E6%92%AD%E6%94%BE">『小助手』 资源播放</a> 脚本使用。该方法需要安装 <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo"> Tampermonkey </a>浏览器插件（插件和脚本安装方法自行百度）。推荐使用这种方式！</p>
+      <h4>短网址：</h4>
+      <vs-button type="line" @click="dwzEvent">生成短网址并复制</vs-button>
       <h4>免责声明：</h4>
       <p>该网站只提供播放功能，仅用于技术交流学习。</p>
     </vs-sidebar>
@@ -40,6 +44,7 @@
 <script>
 import Player from 'xgplayer'
 import Hls from 'xgplayer-hls.js'
+import copy from 'copy-text-to-clipboard'
 export default {
   name: 'app',
   data () {
@@ -50,6 +55,7 @@ export default {
       url: null,
       title: null,
       playing: false,
+      dwzUrl: '',
       config: {
         id: 'xg',
         url: null,
@@ -112,6 +118,7 @@ export default {
       if (url.indexOf('m3u8') !== -1) {
         this.xg = new Hls(this.config)
       }
+      // eslint-disable-next-line
       _hmt.push(['_trackEvent', 'video', 'play', this.title, url])
     },
     switchEvent () {
@@ -124,6 +131,46 @@ export default {
           this.title = null
           clearTimeout(timer)
         }, 10)
+      }
+    },
+    dwzEvent () {
+      let ajax = new XMLHttpRequest()
+      let token = '1089634c66aa18cf3c9a0cd77bdf8ed6'
+      let longUrl = window.location.href
+      let termOfValidity = '1-year'
+
+      ajax.open('post', 'https://dwz.cn/admin/v2/create', 'true')
+      ajax.setRequestHeader('Content-Type', 'application/json')
+      ajax.setRequestHeader('Token', token)
+
+      // 发送请求
+      ajax.send(JSON.stringify({
+        Url: longUrl,
+        TermOfValidity: termOfValidity
+      }))
+
+      ajax.onreadystatechange = () => {
+        if (ajax.readyState === 4 && ajax.status === 200) {
+          let data = ajax.response
+          data = JSON.parse(data)
+          this.dwzUrl = data.ShortUrl
+          let f = copy(this.dwzUrl)
+          if (f) {
+            this.$vs.notify({
+              time: 3000,
+              title: '复制成功',
+              text: '短网址生成成功，并且已复制到剪贴板。',
+              color: 'success'
+            })
+          } else {
+            this.$vs.notify({
+              time: 3000,
+              title: '复制失败',
+              text: '短网址复制到剪贴板失败',
+              color: 'warning'
+            })
+          }
+        }
       }
     }
   },

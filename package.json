@@ -3,17 +3,18 @@
   "version": "0.2.0",
   "private": true,
   "scripts": {
-    "serve": "vue-cli-service serve --open",
+    "dev": "vue-cli-service serve --open",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "copy-text-to-clipboard": "^2.1.1",
     "core-js": "^2.6.5",
     "material-icons": "^0.3.1",
     "vue": "^2.6.10",
-    "vuesax": "^3.9.0",
-    "xgplayer": "^2.1.2",
-    "xgplayer-hls.js": "^1.1.6"
+    "vuesax": "^3.10.8",
+    "xgplayer": "^2.2.0",
+    "xgplayer-hls.js": "^1.1.8"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.8.0",

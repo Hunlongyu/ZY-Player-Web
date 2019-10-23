@@ -6,21 +6,37 @@
       </span>
     </vs-col>
     <vs-sidebar parent="body" default-index="1" color="primary" class="sidebarx" spacer v-model="sideActive">
-      <h3>资源播放器</h3>
+      <vs-divider>资源播放器</vs-divider>
       <p>一个极简的资源播放器，支持 m3u8、mp4 两种格式的视频资源。操作简单，无广告，自适应移动端。</p>
-      <h4>资源网站：</h4>
-      <p class="alink"><a href="http://zuidazy.net/">最大资源网</a></p>
-      <p class="alink"><a href="http://www.okzyw.com/">OK资源网</a></p>
-      <p class="alink"><a href="http://www.subo988.com/">速播资源网</a></p>
-      <p class="alink"><a href="http://www.123ku.com/">123资源站</a></p>
-      <p class="alink"><a href="http://131zy.vip/">看看资源</a></p>
-      <p class="alink"><a href="https://www.baiwanzy.com">百万资源</a></p>
-      <h4>使用说明：</h4>
+      <vs-divider>资源网站</vs-divider>
+      <vs-row vs-type="flex" vs-justify="center">
+        <vs-col vs-type="flex" vs-justify="center">
+          <vs-button type="line" target href="http://zuidazy.net/">最大资源网</vs-button>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center">
+          <vs-button type="line" target href="http://www.okzyw.com/">OK资源网</vs-button>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center">
+          <vs-button type="line" target href="http://www.subo988.com/">速播资源网</vs-button>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center">
+          <vs-button type="line" target href="http://www.123ku.com/">123资源站</vs-button>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center">
+          <vs-button type="line" target href="http://131zy.vip/">看看资源</vs-button>
+        </vs-col>
+        <vs-col vs-type="flex" vs-justify="center">
+          <vs-button type="line" target href="https://www.baiwanzy.com/">百万资源</vs-button>
+        </vs-col>
+      </vs-row>
+      <vs-divider>短网址</vs-divider>
+      <vs-row vs-type="flex" vs-justify="center" vs-align="center">
+        <vs-button type="line" @click="dwzEvent">生成短网址并复制</vs-button>
+      </vs-row>
+      <vs-divider>使用说明</vs-divider>
       <p>方式一：直接在输入框内，粘贴正确的视频资源链接，敲击回车键，即可自动缓冲播放。</p>
       <p>方式二：配合 <a href="https://greasyfork.org/zh-CN/scripts/383642-%E5%B0%8F%E5%8A%A9%E6%89%8B-%E8%B5%84%E6%BA%90%E6%92%AD%E6%94%BE">『小助手』 资源播放</a> 脚本使用。该方法需要安装 <a href="https://chrome.google.com/webstore/detail/tampermonkey/dhdgffkkebhmkfjojejmpbldmpobfkfo"> Tampermonkey </a>浏览器插件（插件和脚本安装方法自行百度）。推荐使用这种方式！</p>
-      <h4>短网址：</h4>
-      <vs-button type="line" @click="dwzEvent">生成短网址并复制</vs-button>
-      <h4>免责声明：</h4>
+      <vs-divider>免责声明</vs-divider>
       <p>该网站只提供播放功能，仅用于技术交流学习。</p>
     </vs-sidebar>
     <vs-col id="search" vs-type="flex" vs-justify="center" vs-align="center" vs-lg="10" vs-sm="10" vs-xs="10">
@@ -200,7 +216,7 @@ html,body,#app{
     }
     p{
       font-size: 14px;
-      text-indent: 28px;
+      // text-indent: 28px;
     }
     .alink{
       text-indent: 0px;

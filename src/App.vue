@@ -31,7 +31,7 @@
       </vs-row>
       <vs-divider>短网址</vs-divider>
       <vs-row vs-type="flex" vs-justify="center" vs-align="center">
-        <vs-button type="line" @click="dwzEvent">生成短网址并复制</vs-button>
+        <vs-button type="line" @click="dwzEvent">一键生成标题和短网址并复制</vs-button>
       </vs-row>
       <vs-divider>使用说明</vs-divider>
       <p>方式一：直接在输入框内，粘贴正确的视频资源链接，敲击回车键，即可自动缓冲播放。</p>
@@ -169,20 +169,20 @@ export default {
         if (ajax.readyState === 4 && ajax.status === 200) {
           let data = ajax.response
           data = JSON.parse(data)
-          this.dwzUrl = data.ShortUrl
+          this.dwzUrl = `资源：${this.title}\n播放：${data.ShortUrl}`
           let f = copy(this.dwzUrl)
           if (f) {
             this.$vs.notify({
               time: 3000,
               title: '复制成功',
-              text: '短网址生成成功，并且已复制到剪贴板。',
+              text: '标题加短网址生成成功，并且已复制到剪贴板。',
               color: 'success'
             })
           } else {
             this.$vs.notify({
               time: 3000,
               title: '复制失败',
-              text: '短网址复制到剪贴板失败',
+              text: '标题加短网址复制到剪贴板失败',
               color: 'warning'
             })
           }

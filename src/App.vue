@@ -64,16 +64,7 @@ export default {
         cssFullscreen: true,
         defaultPlaybackRate: 1,
         playbackRate: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4, 5],
-        playPrev: true,
-        playNextOne: true,
-        videoStop: true,
-        showList: true,
-        showHistory: true,
-        quitMiniMode: true,
-        videoTitle: true,
-        airplay: true,
-        closeVideoTouch: true,
-        ignores: ['cssFullscreen']
+        airplay: false
       }
     }
   },

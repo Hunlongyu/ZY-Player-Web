@@ -42,7 +42,35 @@ html,body{
       }
     }
     .box{
-      width: 50%;
+      width: 50vw;
+      height: 28.125vw;
+    }
+  }
+}
+.xgplayer-star{
+  position: relative;
+  outline: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  &.active{
+    svg path{ fill: red; }
+  }
+}
+.star-body, .history-body{
+  li{
+    margin: 16px 0;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    &:nth-child(odd) {
+      color: #000;
+    }
+    &:nth-child(even) {
+      color: #666;
     }
   }
 }

@@ -20,10 +20,30 @@
       </div>
     </div>
     <KPCDrawer v-model="show.history" title="播放记录" ref="history">
-      播放记录
+      <div class="history-header">
+        <KPCButton type="warning" @click="historyClear()">清空播放记录</KPCButton>
+      </div>
+      <div class="history-body">
+        <ul>
+          <li v-for="(i, j) in list.history" :key="j" @click="historyItemClick(i)">
+            <span>{{i.name}}</span>
+            <span>{{i.date}}</span>
+          </li>
+        </ul>
+      </div>
     </KPCDrawer>
     <KPCDrawer v-model="show.star" title="收藏夹" ref="star">
-      收藏夹
+      <div class="star-header">
+        <KPCButton type="warning" @click="starClear()">清空收藏夹</KPCButton>
+      </div>
+      <div class="star-body">
+        <ul>
+          <li v-for="(i, j) in list.star" :key="j" @click="starItemClick(i)">
+            <span>{{i.name}}</span>
+            <span>{{i.date}}</span>
+          </li>
+        </ul>
+      </div>
     </KPCDrawer>
     <KPCDrawer v-model="show.setting" title="设置" ref="setting">
       设置
@@ -36,18 +56,27 @@ import KPCButton from 'kpc-vue/components/button'
 import KPCDrawer from 'kpc-vue/components/drawer'
 import KPCIcon from 'kpc-vue/components/icon'
 import KPCInput from 'kpc-vue/components/input'
-import 'xgplayer'
+import Message from 'kpc-vue/components/message'
+import Player from 'xgplayer'
 import Hls from 'xgplayer-hls.js'
+import { historyDB, starDB, settingDB } from './utils/database/dexie'
 export default {
   name: 'App',
   data () {
     return {
+      vUrl: '',
+      vName: '',
       show: {
         history: false,
         star: false,
         setting: false,
         player: true
       },
+      list: {
+        history: [],
+        star: []
+      },
+      setting: {},
       url: '',
       xg: null,
       config: {
@@ -59,31 +88,192 @@ export default {
         autoplay: false,
         videoInit: true,
         screenShot: true,
-        keyShortcut: 'off',
+        keyShortcut: 'on',
         crossOrigin: true,
-        cssFullscreen: true,
         defaultPlaybackRate: 1,
         playbackRate: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4, 5],
         airplay: false
-      }
+      },
+      timer: null
     }
   },
   components: {
     KPCButton, KPCIcon, KPCDrawer, KPCInput
   },
   methods: {
+    getParam (e) {
+      const reg = new RegExp('(^|&)' + e + '=([^&]*)(&|$)', 'i')
+      const r = window.location.search.substr(1).match(reg)
+      if (r !== null) return decodeURI(r[2])
+      return null
+    },
+    getInfo () {
+      this.vUrl = this.getParam('url')
+      this.vName = this.getParam('name')
+      if (this.vUrl) {
+        this.show.player = true
+        this.playUrl(this.vUrl)
+      } else {
+        this.show.player = false
+      }
+    },
+    playUrl () {
+      this.config.url = this.vUrl
+      if (this.vUrl.indexOf('m3u8') !== -1) {
+        this.xg = new Hls(this.config)
+        this.videoPlaying()
+        return false
+      }
+    },
+    async videoPlaying () {
+      this.checkStar()
+      const h = await settingDB.find()
+      if (!h.history) return false
+      const res = await historyDB.find({ url: this.vUrl })
+      const doc = {
+        name: this.vName,
+        url: this.vUrl,
+        date: new Date().toLocaleString(),
+        time: 0
+      }
+      if (res) {
+        this.xg.currentTime = res.time
+        historyDB.update(res.id, doc)
+      } else {
+        historyDB.add(doc)
+      }
+      this.timerEvent()
+    },
+    timerEvent () {
+      this.timer = setInterval(async () => {
+        const res = await historyDB.find({ url: this.vUrl })
+        if (res) {
+          const doc = { ...res }
+          doc.time = this.xg.currentTime
+          doc.date = new Date().toLocaleString()
+          delete doc.id
+          await historyDB.update(res.id, doc)
+        }
+      }, 5000)
+    },
     historyBtnEvent () {
       this.show.history = !this.show.history
+      this.getHistory()
     },
     starBtnEvent () {
       this.show.star = !this.show.star
+      this.getStar()
     },
     settingBtnEvent () {
       this.show.setting = !this.show.setting
+    },
+    async getSetting () {
+      const res = await settingDB.find()
+      this.setting = res
+    },
+    async getStar () {
+      const res = await starDB.all()
+      this.list.star = res.reverse()
+    },
+    async getHistory () {
+      const res = await historyDB.all()
+      this.list.history = res
+    },
+    async addStar () {
+      const doc = {
+        name: this.vName,
+        url: this.vUrl,
+        date: new Date().toLocaleString()
+      }
+      const res = await starDB.add(doc)
+      console.log(res, 'add star res')
+    },
+    async checkStar () {
+      const res = await starDB.find({ url: this.vUrl })
+      const starDom = document.querySelector('.xgplayer-star')
+      if (res) {
+        const flag = starDom.classList.contains('active')
+        if (!flag) {
+          starDom.classList.add('active')
+        }
+      } else {
+        const flag = starDom.classList.contains('active')
+        if (flag) {
+          starDom.classList.remove('active')
+        }
+      }
+    },
+    async starEvent () {
+      const res = await starDB.find({ url: this.vUrl })
+      if (res) {
+        await starDB.remove(res.id)
+        Message.success('移除收藏成功。')
+      } else {
+        await starDB.add({ name: this.vName, url: this.vUrl, date: new Date().toLocaleString() })
+        Message.success('添加收藏成功。')
+      }
+      const starDom = document.querySelector('.xgplayer-star')
+      starDom.classList.toggle('active')
+    },
+    addStarBtn () {
+      this.xg.on('ready', () => {
+        const doms = document.querySelector('.xgplayer-controls').childNodes
+        for (const i of doms) {
+          const flag = i.classList.contains('xgplayer-star')
+          if (flag) return false
+        }
+        const controlDom = this.xg.controls
+        const util = Player.util
+        const svg = '<svg t="1606442580426" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3119" width="21" height="21"><path d="M755.2 64c-107.616 0-200.256 87.552-243.168 179.008C469.088 151.552 376.448 64 268.8 64 120.416 64 0 184.448 0 332.832c0 301.856 304.512 380.992 512.032 679.424C708.192 715.68 1024 625.056 1024 332.832 1024 184.448 903.584 64 755.2 64z" p-id="3120" fill="#ffffff"></path></svg>'
+        const btn = util.createDom('xg-star', svg, { title: '收藏' }, 'xgplayer-star')
+        controlDom.appendChild(btn)
+        btn.addEventListener('click', (e) => {
+          e.preventDefault()
+          e.stopPropagation()
+          this.starEvent()
+        })
+        this.checkStar()
+      })
+    },
+    async starClear () {
+      await starDB.clear()
+      Message.success('清空收藏夹成功。')
+      this.getStar()
+    },
+    starItemClick (item) {
+      this.vUrl = item.url
+      this.vName = item.name
+      if (this.xg && this.xg.hasStart) {
+        this.xg.src = item.url
+      } else {
+        this.xg.start(item.url)
+      }
+      document.title = item.name
+      this.show.star = false
+      this.videoPlaying()
+    },
+    async historyClear () {
+      await historyDB.clear()
+      Message.success('清空收藏夹成功。')
+      this.getHistory()
+    },
+    historyItemClick (item) {
+      this.vUrl = item.url
+      this.vName = item.name
+      if (this.xg && this.xg.hasStart) {
+        this.xg.src = item.url
+      } else {
+        this.xg.start(item.url)
+      }
+      document.title = item.name
+      this.show.history = false
+      this.videoPlaying()
     }
   },
   mounted () {
-    this.xg = new Hls(this.config)
+    this.getSetting()
+    this.getInfo()
+    this.addStarBtn()
   }
 }
 </script>

@@ -7,9 +7,9 @@
     </div>
     <div class="body">
       <div class="input" v-show="!show.player">
-        <KPCInput v-model="vUrl" placeholder="请输入播放链接..." clearable>
+        <KPCInput v-model="vUrl" placeholder="请输入 M3U8 格式的播放链接..." clearable @keydown.enter="enterEvent">
           <template slot="append">
-            <KPCButton icon type="none">
+            <KPCButton icon type="none" @click="enterEvent">
               <KPCIcon class="ion-play" />
             </KPCButton>
           </template>
@@ -84,7 +84,7 @@ export default {
         history: false,
         star: false,
         setting: false,
-        player: true
+        player: false
       },
       list: {
         history: [],
@@ -125,18 +125,19 @@ export default {
       this.vUrl = this.getParam('url')
       this.vName = this.getParam('name')
       if (this.vUrl) {
-        this.show.player = true
         this.playUrl(this.vUrl)
-      } else {
-        this.show.player = false
       }
     },
     playUrl () {
-      this.config.url = this.vUrl
       if (this.vUrl.indexOf('m3u8') !== -1) {
+        this.config.url = this.vUrl
+        this.show.player = true
         this.xg = new Hls(this.config)
+        this.addStarBtn()
         this.videoPlaying()
         return false
+      } else {
+        Message.warning('输入的链接格式有问题， 请确认后重试。')
       }
     },
     async videoPlaying () {
@@ -289,12 +290,19 @@ export default {
       const doc = { ...res }
       doc.history = this.historySwitch
       settingDB.update(doc)
+    },
+    enterEvent () {
+      if (this.vUrl) {
+        this.vName = '未知资源' + new Date().getTime()
+        this.playUrl()
+      } else {
+        Message.warning('请输入 M3U8 格式的播放链接。')
+      }
     }
   },
   mounted () {
     this.getSetting()
     this.getInfo()
-    this.addStarBtn()
   }
 }
 </script>

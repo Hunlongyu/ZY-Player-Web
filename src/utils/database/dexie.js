@@ -79,8 +79,8 @@ class Setting {
     return await db.setting.get({ id: 0 })
   }
 
-  async update (id, doc) {
-    return await db.setting.update(id, doc)
+  async update (doc) {
+    return await db.setting.update(0, doc)
   }
 }
 

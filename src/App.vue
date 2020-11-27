@@ -7,7 +7,7 @@
     </div>
     <div class="body">
       <div class="input" v-show="!show.player">
-        <KPCInput v-model="url" placeholder="请输入播放链接..." clearable>
+        <KPCInput v-model="vUrl" placeholder="请输入播放链接..." clearable>
           <template slot="append">
             <KPCButton icon type="none">
               <KPCIcon class="ion-play" />
@@ -46,7 +46,20 @@
       </div>
     </KPCDrawer>
     <KPCDrawer v-model="show.setting" title="设置" ref="setting">
-      设置
+      <div class="setting-body">
+        <div class="logo">
+          <img src="./assets/logo.png" alt="">
+          <h2>ZY Player Web</h2>
+          <p>
+            <a href="https://github.com/Hunlongyu/ZY-Player-Web" target="_blank">Github</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player-Web/issues" target="_blank">反馈</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player" target="_blank">电脑端</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player-APP" target="_blank">手机端</a>
+          </p>
+        </div>
+        <div class="setting-item">记录播放历史：<KSwitch v-model="historySwitch" on="开启" off="关闭" width="70" @click="hsChange"/></div>
+        <div class="setting-item">所有资源来自网上, 该软件不参与任何制作, 上传等内容. 该软件仅供学习参考, 请于安装后24小时内删除.</div>
+      </div>
     </KPCDrawer>
   </div>
 </template>
@@ -57,6 +70,7 @@ import KPCDrawer from 'kpc-vue/components/drawer'
 import KPCIcon from 'kpc-vue/components/icon'
 import KPCInput from 'kpc-vue/components/input'
 import Message from 'kpc-vue/components/message'
+import { Switch as KSwitch } from 'kpc-vue/components/switch'
 import Player from 'xgplayer'
 import Hls from 'xgplayer-hls.js'
 import { historyDB, starDB, settingDB } from './utils/database/dexie'
@@ -77,7 +91,6 @@ export default {
         star: []
       },
       setting: {},
-      url: '',
       xg: null,
       config: {
         id: 'xgplayer',
@@ -94,11 +107,12 @@ export default {
         playbackRate: [0.25, 0.5, 0.75, 1, 1.25, 1.5, 1.75, 2, 3, 4, 5],
         airplay: false
       },
-      timer: null
+      timer: null,
+      historySwitch: false
     }
   },
   components: {
-    KPCButton, KPCIcon, KPCDrawer, KPCInput
+    KPCButton, KPCIcon, KPCDrawer, KPCInput, KSwitch
   },
   methods: {
     getParam (e) {
@@ -170,6 +184,7 @@ export default {
     async getSetting () {
       const res = await settingDB.find()
       this.setting = res
+      this.historySwitch = res.history
     },
     async getStar () {
       const res = await starDB.all()
@@ -268,6 +283,12 @@ export default {
       document.title = item.name
       this.show.history = false
       this.videoPlaying()
+    },
+    async hsChange () {
+      const res = await settingDB.find()
+      const doc = { ...res }
+      doc.history = this.historySwitch
+      settingDB.update(doc)
     }
   },
   mounted () {

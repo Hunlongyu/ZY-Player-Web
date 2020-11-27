@@ -74,3 +74,19 @@ html,body{
     }
   }
 }
+.setting-body{
+  .logo{
+    text-align: center;
+    img{
+      width: 100px;
+      height: auto;
+    }
+    a{
+      margin: 0 20px;
+    }
+    margin-bottom: 30px;
+  }
+  .setting-item{
+    margin-top: 20px;
+  }
+}

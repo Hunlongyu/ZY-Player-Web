@@ -25,8 +25,9 @@
       </div>
       <div class="history-body">
         <ul>
-          <li v-for="(i, j) in list.history" :key="j" @click="historyItemClick(i)">
+          <li v-for="(i, j) in list.history" :key="j" @click.stop="historyItemClick(i)">
             <span>{{i.name}}</span>
+            <a :href="i.host" target="_blank">{{i.host}}</a>
             <span>{{i.date}}</span>
           </li>
         </ul>
@@ -38,8 +39,9 @@
       </div>
       <div class="star-body">
         <ul>
-          <li v-for="(i, j) in list.star" :key="j" @click="starItemClick(i)">
+          <li v-for="(i, j) in list.star" :key="j" @click.stop="starItemClick(i)">
             <span>{{i.name}}</span>
+            <a :href="i.host" target="_blank">{{i.host}}</a>
             <span>{{i.date}}</span>
           </li>
         </ul>
@@ -80,6 +82,7 @@ export default {
     return {
       vUrl: '',
       vName: '',
+      vHost: '',
       show: {
         history: false,
         star: false,
@@ -124,6 +127,7 @@ export default {
     getInfo () {
       this.vUrl = this.getParam('url')
       this.vName = this.getParam('name')
+      this.vHost = this.getParam('host')
       if (this.vUrl) {
         this.playUrl(this.vUrl)
       }
@@ -148,6 +152,7 @@ export default {
       const doc = {
         name: this.vName,
         url: this.vUrl,
+        host: this.vHost,
         date: new Date().toLocaleString(),
         time: 0
       }
@@ -181,6 +186,7 @@ export default {
     },
     settingBtnEvent () {
       this.show.setting = !this.show.setting
+      this.getSetting()
     },
     async getSetting () {
       const res = await settingDB.find()
@@ -194,15 +200,6 @@ export default {
     async getHistory () {
       const res = await historyDB.all()
       this.list.history = res
-    },
-    async addStar () {
-      const doc = {
-        name: this.vName,
-        url: this.vUrl,
-        date: new Date().toLocaleString()
-      }
-      const res = await starDB.add(doc)
-      console.log(res, 'add star res')
     },
     async checkStar () {
       const res = await starDB.find({ url: this.vUrl })
@@ -225,7 +222,7 @@ export default {
         await starDB.remove(res.id)
         Message.success('移除收藏成功。')
       } else {
-        await starDB.add({ name: this.vName, url: this.vUrl, date: new Date().toLocaleString() })
+        await starDB.add({ name: this.vName, url: this.vUrl, host: this.vHost, date: new Date().toLocaleString() })
         Message.success('添加收藏成功。')
       }
       const starDom = document.querySelector('.xgplayer-star')

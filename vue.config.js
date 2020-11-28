@@ -1,6 +1,6 @@
 module.exports = {
   publicPath: '/',
-  outputDir: 'docs',
+  outputDir: 'src/docs',
   productionSourceMap: false,
   pwa: {
     name: 'ZY Player Web',

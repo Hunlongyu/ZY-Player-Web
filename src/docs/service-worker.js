@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.72ee42eb2a9559f7d8399ae8b0f99984.js"
+  "precache-manifest.2bcfa9c42631be25da8f6e7e0c9c5862.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "zyplayerweb"});

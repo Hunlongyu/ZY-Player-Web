@@ -2,10 +2,10 @@ import Dexie from 'dexie'
 
 const db = new Dexie('ZYPlayerWeb')
 
-db.version(1).stores({
+db.version(2).stores({
   setting: 'id, theme, volume',
-  star: '++id, name, url, date',
-  history: '++id, name, url, date, time'
+  star: '++id, name, url, date, host',
+  history: '++id, name, url, date, host, time'
 })
 
 const settingConfig = [

@@ -1,7 +1,9 @@
 @media (max-width:720px) {
   #app .body .box{ width: 90vw; height: 50.7vw; }
+  #app .body .input .k-input{ width: 90vw; }
 }
 
 @media (min-width:720px) {
   #app .body .box{ width: 50vw; height: 28.125vw; }
+  #app .body .input .k-input{ width: 50vw; }
 }

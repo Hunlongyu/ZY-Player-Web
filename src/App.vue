@@ -199,7 +199,7 @@ export default {
     },
     async getHistory () {
       const res = await historyDB.all()
-      this.list.history = res
+      this.list.history = res.reverse()
     },
     async checkStar () {
       const res = await starDB.find({ url: this.vUrl })

@@ -1,5 +1,5 @@
 module.exports = {
-  publicPath: '/',
+  publicPath: './',
   outputDir: 'src/docs',
   productionSourceMap: false,
   pwa: {

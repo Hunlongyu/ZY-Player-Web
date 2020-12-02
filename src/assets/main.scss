@@ -65,12 +65,27 @@ html,body{
     margin: 16px 0;
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
+    // justify-content: space-between;
     &:nth-child(odd) {
       color: #000;
     }
     &:nth-child(even) {
       color: #666;
+    }
+    .li-name{
+      flex: 1;
+    }
+    .li-host{
+      display: inline-block;
+      width: 180px;
+    }
+    .li-date{
+      display: inline-block;
+      width: 160px;
+    }
+    .li-delete{
+      display: inline-block;
+      width: 40px;
     }
   }
 }

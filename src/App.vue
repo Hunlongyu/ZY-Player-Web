@@ -26,9 +26,10 @@
       <div class="history-body">
         <ul>
           <li v-for="(i, j) in list.history" :key="j" @click.stop="historyItemClick(i)">
-            <span>{{i.name}}</span>
-            <a :href="i.host" target="_blank">{{i.host}}</a>
-            <span>{{i.date}}</span>
+            <span class="li-name">{{i.name}}</span>
+            <a class="li-host" :href="i.host" target="_blank">{{i.host}}</a>
+            <span class="li-date">{{i.date}}</span>
+            <span class="li-delete" @click.stop="deleteHistory(i)">删除</span>
           </li>
         </ul>
       </div>
@@ -40,9 +41,10 @@
       <div class="star-body">
         <ul>
           <li v-for="(i, j) in list.star" :key="j" @click.stop="starItemClick(i)">
-            <span>{{i.name}}</span>
-            <a :href="i.host" target="_blank">{{i.host}}</a>
-            <span>{{i.date}}</span>
+            <span class="li-name">{{i.name}}</span>
+            <a class="li-host" :href="i.host" target="_blank">{{i.host}}</a>
+            <span class="li-date">{{i.date}}</span>
+            <span class="li-delete" @click.stop="deleteStar(i)">删除</span>
           </li>
         </ul>
       </div>
@@ -54,13 +56,24 @@
           <h2>ZY Player Web</h2>
           <p>
             <a href="https://github.com/Hunlongyu/ZY-Player-Web" target="_blank">Github</a>
-            <a href="https://github.com/Hunlongyu/ZY-Player-Web/issues" target="_blank">反馈</a>
             <a href="https://github.com/Hunlongyu/ZY-Player" target="_blank">电脑端</a>
             <a href="https://github.com/Hunlongyu/ZY-Player-APP" target="_blank">手机端</a>
+            <a href="https://github.com/cuiocean/ZY-Player-TV" target="_blank">TV端</a>
           </p>
         </div>
-        <div class="setting-item">记录播放历史：<KSwitch v-model="historySwitch" on="开启" off="关闭" width="70" @click="hsChange"/></div>
-        <div class="setting-item">所有资源来自网上, 该软件不参与任何制作, 上传等内容. 该软件仅供学习参考, 请于安装后24小时内删除.</div>
+        <div class="setting-item">
+          <h3>设置: </h3>
+          <p>记录播放历史：<KSwitch v-model="historySwitch" on="开启" off="关闭" width="70" @click="hsChange"/></p>
+        </div>
+        <div class="setting-item">
+          <h3>使用教程: </h3>
+          <p>📄 方法一： 直接粘贴 M3U8 格式的播放链接</p>
+          <p>📑 方法二（推荐）：配合油猴脚本<a href="https://greasyfork.org/zh-CN/scripts/383642-%E5%B0%8F%E5%8A%A9%E6%89%8B-zy-player-%E8%B5%84%E6%BA%90%E5%8A%A9%E6%89%8B" target="_blank">『小助手』ZY Player 资源助手 </a>使用</p>
+        </div>
+        <div class="setting-item">
+          <h3>声明: </h3>
+          <p>所有资源来自网上, 该网站不参与任何制作, 上传, 下载等内容. 该软件仅供学习参考, 请于安装后24小时内删除.</p>
+        </div>
       </div>
     </KPCDrawer>
   </div>
@@ -295,6 +308,14 @@ export default {
       } else {
         Message.warning('请输入 M3U8 格式的播放链接。')
       }
+    },
+    async deleteHistory (item) {
+      await historyDB.remove(item.id)
+      this.getHistory()
+    },
+    async deleteStar (item) {
+      await starDB.remove(item.id)
+      this.getStar()
     }
   },
   mounted () {

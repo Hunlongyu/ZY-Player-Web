@@ -3,6 +3,30 @@
   #app .body .input .k-input{ width: 90vw; }
 }
 
+@media (max-width:720px) {
+  .star-body, .history-body{
+    li{
+      display: block;
+      .li-name{
+        display: inline-block;
+        width: 100vw;
+      }
+      .li-host{
+        display: inline-block;
+        width: 150px;
+      }
+      .li-date{
+        display: inline-block;
+        width: 160px;
+      }
+      .li-delete{
+        display: inline-block;
+        width: 40px;
+      }
+    }
+  }
+}
+
 @media (min-width:720px) {
   #app .body .box{ width: 50vw; height: 28.125vw; }
   #app .body .input .k-input{ width: 50vw; }

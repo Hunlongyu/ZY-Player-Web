@@ -4,8 +4,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "CNAME"
   },
   {
-    "revision": "bb78b7507f7348e211df",
-    "url": "css/app.6834bda3.css"
+    "revision": "d6113f615e2a45ef59ea",
+    "url": "css/app.29aac9b9.css"
   },
   {
     "revision": "776902e94e2077b227a1",
@@ -52,12 +52,12 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "img/logo.3535fb1b.png"
   },
   {
-    "revision": "b568282c249133104ffaf14e475e8a1d",
+    "revision": "0918cd56a68d917d7f35685d7d3c8771",
     "url": "index.html"
   },
   {
-    "revision": "bb78b7507f7348e211df",
-    "url": "js/app.60ad6b92.js"
+    "revision": "d6113f615e2a45ef59ea",
+    "url": "js/app.7e367b92.js"
   },
   {
     "revision": "776902e94e2077b227a1",

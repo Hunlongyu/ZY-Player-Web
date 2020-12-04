@@ -10,7 +10,6 @@
 <p>
 <p align="center">
 <img src="https://github.com/aleen42/badges/raw/master/src/visual_studio_code_flat_square.svg?sanitize=true">
-<img src="https://github.com/aleen42/badges/raw/master/src/vue_flat_square.svg?sanitize=true">
 <img src="https://github.com/aleen42/badges/raw/master/src/javascript_flat_square.svg?sanitize=true">
 <img src="https://github.com/aleen42/badges/raw/master/src/eslint_flat_square.svg?sanitize=true">
 </p>

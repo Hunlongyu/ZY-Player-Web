@@ -1,41 +1,27 @@
-<p align="center">
-<img width="128" src="https://i.loli.net/2020/05/07/9kLvPnWVCp7538c.png" >
-</p>
-<p align="center">
-<a href="http://zyplayer.fun/" target="_blank">官网</a>
-<a href="https://github.com/Hunlongyu/ZY-Player-Web/issues" target="_blank">反馈</a>
-</p>
-<p align="center">
-<img src="https://forthebadge.com/images/badges/built-with-love.svg">
-<p>
-<p align="center">
-<img src="https://github.com/aleen42/badges/raw/master/src/visual_studio_code_flat_square.svg?sanitize=true">
-<img src="https://github.com/aleen42/badges/raw/master/src/javascript_flat_square.svg?sanitize=true">
-<img src="https://github.com/aleen42/badges/raw/master/src/eslint_flat_square.svg?sanitize=true">
-</p>
+# Vue 3 + Typescript + Vite
 
-<h1 align="center">ZY Player Web 资源播放器</h1>
+This template should help get you started developing with Vue 3 and Typescript in Vite.
 
-### 🌎 体验地址：
+## Recommended IDE Setup
 
-- 🚀 [国内用户](http://hunlongyu.gitee.io/zy-player-web/)
-- 🚂 [海外用户](http://web.zyplayer.fun/)
+[VSCode](https://code.visualstudio.com/) + [Vetur](https://marketplace.visualstudio.com/items?itemName=octref.vetur). Make sure to enable `vetur.experimental.templateInterpolationService` in settings!
 
-### 📖 使用教程
+### If Using `<script setup>`
 
-- 📄 方法一： 直接粘贴 M3U8 格式的播放链接
-- 📑 方法二（推荐）：配合油猴脚本[『小助手』ZY Player 资源助手](https://greasyfork.org/zh-CN/scripts/383642-%E5%B0%8F%E5%8A%A9%E6%89%8B-zy-player-%E8%B5%84%E6%BA%90%E5%8A%A9%E6%89%8B) 使用
+[`<script setup>`](https://github.com/vuejs/rfcs/pull/227) is a feature that is currently in RFC stage. To get proper IDE support for the syntax, use [Volar](https://marketplace.visualstudio.com/items?itemName=johnsoncodehk.volar) instead of Vetur (and disable Vetur).
 
-### ✨ 特性
+## Type Support For `.vue` Imports in TS
 
-- 🍕 页面自适应支持电脑端浏览器，和手机端浏览器
-- 🌭 支持播放记录功能, 自动跳转历史播放进度
-- 🍿 支持收藏夹功能
+Since TypeScript cannot handle type information for `.vue` imports, they are shimmed to be a generic Vue component type by default. In most cases this is fine if you don't really care about component prop types outside of templates. However, if you wish to get actual prop types in `.vue` imports (for example to get props validation when using manual `h(...)` calls), you can use the following:
 
-### 🎨 截图
+### If Using Volar
 
-|                      🥼 主页                       |                      🧥 播放记录                       |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![01.png](https://i.loli.net/2020/11/28/MSREGoWUpaBXQJ1.png) | ![02.png](https://i.loli.net/2020/11/28/Gb3z5ivLjSqXUN7.png) |
-|                            👔 收藏                            |                            👕 设置                            |
-| ![03.png](https://i.loli.net/2020/11/28/kuOYhoQ3KaNzFSt.png) | ![04.png](https://i.loli.net/2020/11/28/GqbEvRf9YS7n5aL.png) |
+Run `Volar: Switch TS Plugin on/off` from VSCode command palette.
+
+### If Using Vetur
+
+1. Install and add `@vuedx/typescript-plugin-vue` to the [plugins section](https://www.typescriptlang.org/tsconfig#plugins) in `tsconfig.json`
+2. Delete `src/shims-vue.d.ts` as it is no longer needed to provide module info to Typescript
+3. Open `src/main.ts` in VSCode
+4. Open the VSCode command palette
+5. Search and run "Select TypeScript version" -> "Use workspace version"

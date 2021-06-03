@@ -1,13 +1,21 @@
 <template>
-  <p>test</p>
+  <p>{{ t('name') }}</p>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue'
+import { useI18n } from 'vue-i18n'
 
 export default defineComponent({
   name: 'App',
-  components: {}
+  components: {},
+  setup () {
+    const { t, locale } = useI18n()
+    return {
+      t,
+      locale
+    }
+  }
 })
 </script>
 

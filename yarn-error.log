@@ -1,0 +1,49 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Users\hunlongyu\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add vite-plugin-style-import -D
+
+PATH: 
+  C:\Program Files\PowerShell\7-preview;C:\Python39\Scripts\;C:\Python39\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\dotnet\;C:\Program Files (x86)\dotnet\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\PowerShell\7-preview\preview;C:\Users\hunlongyu\.cargo\bin;C:\Users\hunlongyu\AppData\Local\Microsoft\WindowsApps;C:\Users\hunlongyu\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\nodejs;C:\Users\hunlongyu\AppData\Local\GitHubDesktop\bin;D:\flutter\bin;C:\Program Files (x86)\GitHub CLI\;C:\Users\hunlongyu\AppData\Roaming\npm;
+
+Yarn version: 
+  1.22.10
+
+Node version: 
+  14.16.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'D:\Github\ZY-Player-Web\node_modules\esbuild\esbuild.exe'
+
+npm manifest: 
+  {
+    "version": "0.0.0",
+    "scripts": {
+      "dev": "vite --host",
+      "build": "vue-tsc --noEmit && vite build",
+      "serve": "vite preview"
+    },
+    "dependencies": {
+      "vue": "^3.0.5",
+      "vue-i18n": "^9.1.6",
+      "xgplayer": "^2.20.13",
+      "xgplayer-hls.js": "^2.4.2"
+    },
+    "devDependencies": {
+      "@intlify/vite-plugin-vue-i18n": "^2.1.2",
+      "@vitejs/plugin-vue": "^1.2.3",
+      "@vue/compiler-sfc": "^3.0.5",
+      "sass": "^1.34.1",
+      "typescript": "^4.1.3",
+      "vite": "^2.3.5",
+      "vite-plugin-pwa": "^0.7.3",
+      "vue-tsc": "^0.0.24"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

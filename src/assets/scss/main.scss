@@ -1,0 +1,26 @@
+html,body{
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: transparent;
+  font-family: Helvetica Neue,Helvetica,PingFang SC,Hiragino Sans GB,Microsoft YaHei,SimSun,sans-serif;
+}
+#app{
+  height: 100%;
+}
+.container{
+  height: 100%;
+}
+.header{
+  display: flex;
+  justify-content: flex-end;
+  align-items: flex-end;
+}
+.main{
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

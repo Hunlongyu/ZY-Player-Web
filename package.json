@@ -6,11 +6,11 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@vime/core": "^5.0.31",
+    "@vime/vue-next": "^5.0.31",
     "element-plus": "1.0.2-beta.46",
     "vue": "^3.0.5",
-    "vue-i18n": "^9.1.6",
-    "xgplayer": "^2.20.13",
-    "xgplayer-hls.js": "^2.4.2"
+    "vue-i18n": "^9.1.6"
   },
   "devDependencies": {
     "@intlify/vite-plugin-vue-i18n": "^2.1.2",

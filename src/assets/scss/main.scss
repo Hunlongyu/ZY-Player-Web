@@ -9,18 +9,18 @@ html,body{
 }
 #app{
   height: 100%;
-}
-.container{
-  height: 100%;
-}
-.header{
-  display: flex;
-  justify-content: flex-end;
-  align-items: flex-end;
-}
-.main{
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .container{
+    height: 100%;
+    .header{
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+    }
+    .input-box, .player-box{
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
 }

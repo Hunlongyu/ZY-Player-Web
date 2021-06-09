@@ -10,7 +10,8 @@ import {
   ElCol,
   ElIcon,
   ElButton,
-  ElInput
+  ElInput,
+  ElDrawer
 } from 'element-plus'
 
 const i18n = createI18n({
@@ -20,5 +21,5 @@ const i18n = createI18n({
 
 const app = createApp(App)
 app.use(i18n)
-app.use(ElContainer).use(ElHeader).use(ElMain).use(ElRow).use(ElCol).use(ElIcon).use(ElButton).use(ElInput)
+app.use(ElContainer).use(ElHeader).use(ElMain).use(ElRow).use(ElCol).use(ElIcon).use(ElButton).use(ElInput).use(ElDrawer)
 app.mount('#app')

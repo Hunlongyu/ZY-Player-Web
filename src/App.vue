@@ -29,6 +29,15 @@
         </el-col>
       </el-row>
     </el-main>
+    <el-drawer :title="t('title.history')" :size="size" v-model="show.history" direction="rtl">
+      <span>lala</span>
+    </el-drawer>
+    <el-drawer :title="t('title.star')" :size="size" v-model="show.star" direction="rtl">
+      <span>lala</span>
+    </el-drawer>
+    <el-drawer :title="t('title.setting')" :size="size" v-model="show.setting" direction="rtl">
+      <span>lala</span>
+    </el-drawer>
   </el-container>
 </template>
 
@@ -61,6 +70,7 @@ export default defineComponent({
       hls: false,
       mp4: false
     })
+    const size = ref('100%')
 
     const mp4url = 'https://media.vimejs.com/720p.mp4'
     const m3u8Url = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
@@ -74,11 +84,17 @@ export default defineComponent({
       show.mp4 = false
     }
     // 历史记录按钮点击事件
-    function historyBtnEvent () {}
+    function historyBtnEvent () {
+      show.history = true
+    }
     // 收藏记录按钮点击事件
-    function starBtnEvent () {}
+    function starBtnEvent () {
+      show.star = true
+    }
     // 设置按钮点击事件
-    function settingBtnEvent () {}
+    function settingBtnEvent () {
+      show.setting = true
+    }
     // 播放事件
     function enterEvent () {
       if (url.input === '') {
@@ -100,7 +116,20 @@ export default defineComponent({
       }
     }
 
+    // 通过判断设置抽屉的宽度
+    function getWinSize () {
+      const w = window.screen.width
+      if (w <= 768) {
+        size.value = '100%'
+      } else {
+        size.value = '50%'
+      }
+    }
+
     onMounted(() => {
+      window.onresize = () => {
+        getWinSize()
+      }
       console.log(player)
     })
 
@@ -110,6 +139,7 @@ export default defineComponent({
       url,
       show,
       player,
+      size,
       linkBtnEvent,
       historyBtnEvent,
       starBtnEvent,

@@ -1,16 +1,17 @@
 <template>
   <el-container class="container">
     <el-header class="header">
-      <el-button @click="historyBtnEvent" icon="el-icon-time" circle></el-button>
-      <el-button @click="starBtnEvent" icon="el-icon-star-off" circle></el-button>
-      <el-button @click="settingBtnEvent" icon="el-icon-setting" circle></el-button>
+      <el-button v-show="show.player" @click="linkBtnEvent" icon="el-icon-link" circle :title="t('title.link')"></el-button>
+      <el-button @click="historyBtnEvent" icon="el-icon-time" circle :title="t('title.history')"></el-button>
+      <el-button @click="starBtnEvent" icon="el-icon-star-off" circle :title="t('title.star')"></el-button>
+      <el-button @click="settingBtnEvent" icon="el-icon-setting" circle :title="t('title.setting')"></el-button>
     </el-header>
     <el-main>
       <el-row class="input-box" type="flex" v-show="!show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24">
-          <el-input :placeholder="t('url.input')" v-model.trim="url.input" @keydown.enter="enterEvent">
+          <el-input :placeholder="t('url.input')" v-model.trim="url.input" @keydown.enter="enterEvent" clearable>
             <template #append>
-              <el-button @click="enterEvent" icon="el-icon-video-play"></el-button>
+              <el-button @click="enterEvent" icon="el-icon-video-play" :title="t('title.play')"></el-button>
             </template>
           </el-input>
         </el-col>
@@ -65,7 +66,13 @@ export default defineComponent({
     const m3u8Url = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
 
     const player = ref<HTMLVmPlayerElement | null>(null)
-    
+
+    // 返回输入框
+    function linkBtnEvent () {
+      show.player = false
+      show.hls = false
+      show.mp4 = false
+    }
     // 历史记录按钮点击事件
     function historyBtnEvent () {}
     // 收藏记录按钮点击事件
@@ -103,6 +110,7 @@ export default defineComponent({
       url,
       show,
       player,
+      linkBtnEvent,
       historyBtnEvent,
       starBtnEvent,
       settingBtnEvent,

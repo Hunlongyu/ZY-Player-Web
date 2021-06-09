@@ -1,4 +1,11 @@
 {
+  "title": {
+    "link": "Video link",
+    "history": "Playback record",
+    "star": "Favorites",
+    "setting": "Set up",
+    "play": "Play!"
+  },
   "url": {
     "input": "Please enter the video link...",
     "empty": "Link cannot be empty, please check and try again...",

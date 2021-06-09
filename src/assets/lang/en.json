@@ -1,3 +1,9 @@
 {
+  "url": {
+    "input": "Please enter the video link...",
+    "empty": "Link cannot be empty, please check and try again...",
+    "correct": "The link is correct, loading...",
+    "incorrect": "The link is incorrect. Please check and try again..."
+  },
   "name": "name - en"
 }

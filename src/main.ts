@@ -10,11 +10,11 @@ import {
   ElCol,
   ElIcon,
   ElButton,
-  ElInput
+  ElInput,
 } from 'element-plus'
 
 const i18n = createI18n({
-  locale: 'cn',
+  locale: 'en',
   messages
 })
 

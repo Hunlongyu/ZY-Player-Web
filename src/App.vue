@@ -8,7 +8,7 @@
     <el-main>
       <el-row class="input-box" type="flex" v-show="!show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24">
-          <el-input placeholder="请输入内容" v-model.trim="uri" @keydown.enter="enterEvent">
+          <el-input :placeholder="t('url.input')" v-model.trim="url.input" @keydown.enter="enterEvent">
             <template #append>
               <el-button @click="enterEvent" icon="el-icon-video-play"></el-button>
             </template>
@@ -17,10 +17,13 @@
       </el-row>
       <el-row class="player-box" type="flex" v-show="show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24" class="box">
-          <Player playsinline controls autoplay ref="player" @vPlaybackReady="onPlaybackReady">
-            <Video>
-              <source data-src="https://media.vimejs.com/720p.mp4" type="video/mp4" />
+          <player playsinline controls autoplay ref="player">
+            <Video v-if="show.mp4">
+              <source :data-src="url.mp4" type="video/mp4" />
             </Video>
+            <Hls v-if="show.hls" :disableRemotePlayback="true" version="latest">
+              <source :data-src="url.hls" type="application/x-mpegURL" />
+            </Hls>
           </Player>
         </el-col>
       </el-row>
@@ -31,27 +34,37 @@
 <script lang="ts">
 import { defineComponent, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Player, Video } from '@vime/vue-next'
+import { Player, Video, Hls } from '@vime/vue-next'
 import '@vime/core/themes/default.css'
+import { ElMessage } from 'element-plus'
 
 export default defineComponent({
   name: 'App',
   components: {
     Player,
-    Video
+    Video,
+    Hls
   },
   setup () {
     const { t, locale } = useI18n()
-    const uri = ref('') // 用户输入的播放链接
+    const url = reactive({
+      input: '',
+      hls: '',
+      mp4: ''
+    })
     const show = reactive({
       history: false,
       star: false,
       setting: false,
-      player: true
+      player: false,
+      hls: false,
+      mp4: false
     })
 
+    const mp4url = 'https://media.vimejs.com/720p.mp4'
+    const m3u8Url = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
+
     const player = ref<HTMLVmPlayerElement | null>(null)
-    const src = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
     
     // 历史记录按钮点击事件
     function historyBtnEvent () {}
@@ -60,25 +73,40 @@ export default defineComponent({
     // 设置按钮点击事件
     function settingBtnEvent () {}
     // 播放事件
-    function enterEvent () {}
-
-    function onPlaybackReady () {
-      console.log('onPlaybackReady')
+    function enterEvent () {
+      if (url.input === '') {
+        ElMessage.warning(t('url.empty'))
+        return false
+      }
+      if (url.input.indexOf('.m3u8') !== -1) {
+        show.mp4 = false
+        url.hls = url.input
+        show.player = true
+        show.hls = true
+      } else if (url.input.indexOf('.mp4') !== -1) {
+        show.hls = false
+        url.mp4 = url.input
+        show.player = true
+        show.mp4 = true
+      } else {
+        ElMessage.warning(t('url.incorrect'))
+      }
     }
 
-    onMounted(() => {})
+    onMounted(() => {
+      console.log(player)
+    })
 
     return {
       t,
       locale,
-      uri,
-      player,
+      url,
       show,
+      player,
       historyBtnEvent,
       starBtnEvent,
       settingBtnEvent,
-      enterEvent,
-      onPlaybackReady
+      enterEvent
     }
   }
 })

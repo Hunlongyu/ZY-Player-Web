@@ -202,18 +202,18 @@ export default defineComponent({
     function onTimeUpdate (time: any) {
       currentTime.value = time
       if (setting.history) {
-        historyUpdate()
+        historyUpdate(time)
       }
     }
     // 播放时更新历史记录里数据
-    const historyUpdate = throttle(async () => {
+    const historyUpdate = throttle(async (time) => {
       const h = await historyDB.find(url.input)
       const doc = {
         name: '',
         url: url.input,
         host: url.host,
         date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
-        time: currentTime.value
+        time: time
       }
       if (h && h.id) {
         doc.name = h.name

@@ -4,7 +4,7 @@ export interface IHistory {
   url: string
   date: string
   host: string
-  time: string
+  time: number
 }
 
 export interface IStar {
@@ -13,7 +13,7 @@ export interface IStar {
   url: string
   date: string
   host: string
-  time: string
+  time: number
 }
 
 export interface ISetting {

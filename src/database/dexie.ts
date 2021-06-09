@@ -48,8 +48,8 @@ class History {
     return await db.history.add(doc)
   }
 
-  async find (doc: IHistory) {
-    return await db.history.where(doc).first()
+  async find (url: string) {
+    return await db.history.where({ url }).first()
   }
 
   async update (id: number, doc: IHistory) {
@@ -74,8 +74,8 @@ class Star {
     return await db.star.add(doc)
   }
 
-  async find (doc: IStar) {
-    return await db.star.where(doc).first()
+  async find (url: string) {
+    return await db.star.where({ url }).first()
   }
 
   async update (id: number, doc: IStar) {

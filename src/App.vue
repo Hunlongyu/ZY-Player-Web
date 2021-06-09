@@ -1,11 +1,13 @@
 <template>
   <el-container class="container">
+    <!-- 顶部操作按钮 -->
     <el-header class="header">
       <el-button v-show="show.player" @click="linkBtnEvent" icon="el-icon-link" circle :title="t('title.link')"></el-button>
       <el-button @click="historyBtnEvent" icon="el-icon-time" circle :title="t('title.history')"></el-button>
       <el-button @click="starBtnEvent" icon="el-icon-star-off" circle :title="t('title.star')"></el-button>
       <el-button @click="settingBtnEvent" icon="el-icon-setting" circle :title="t('title.setting')"></el-button>
     </el-header>
+    <!-- 播放器 -->
     <el-main>
       <el-row class="input-box" type="flex" v-show="!show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24">
@@ -18,7 +20,7 @@
       </el-row>
       <el-row class="player-box" type="flex" v-show="show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24" class="box">
-          <Player playsinline controls autoplay ref="player">
+          <Player playsinline controls autoplay :currentTime="currentTime" @vmCurrentTimeChange="onTimeUpdate" ref="player">
             <Video v-if="show.mp4">
               <source :data-src="url.mp4" type="video/mp4" />
             </Video>
@@ -29,12 +31,15 @@
         </el-col>
       </el-row>
     </el-main>
+    <!-- 抽屉：播放记录 -->
     <el-drawer :title="t('title.history')" :size="size" v-model="show.history" direction="rtl">
       <span>lala</span>
     </el-drawer>
+    <!-- 抽屉：收藏夹 -->
     <el-drawer :title="t('title.star')" :size="size" v-model="show.star" direction="rtl">
       <span>lala</span>
     </el-drawer>
+    <!-- 抽屉：设置 -->
     <el-drawer :title="t('title.setting')" :size="size" v-model="show.setting" direction="rtl">
       <span>lala</span>
     </el-drawer>
@@ -48,6 +53,9 @@ import { Player, Video, Hls } from '@vime/vue-next'
 import '@vime/core/themes/default.css'
 import { ElMessage } from 'element-plus'
 import { historyDB, starDB, settingDB } from './database/dexie'
+import { IHistory, IStar, ISetting } from './database/types'
+import { throttle } from 'lodash'
+import dayjs from 'dayjs'
 
 export default defineComponent({
   name: 'App',
@@ -60,22 +68,27 @@ export default defineComponent({
     const { t, locale } = useI18n()
     const url = reactive({
       input: '',
-      hls: '',
-      mp4: ''
+      hls: 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8',
+      mp4: '',
+      host: ''
     })
     const show = reactive({
       history: false,
       star: false,
       setting: false,
-      player: false,
-      hls: false,
+      player: true,
+      hls: true,
       mp4: false
     })
     const setting = reactive({
       language: 'cn',
       history: false
     })
+    const star = ref<IStar[]>([])
+    const history = ref<IHistory[]>([])
     const size = ref('100%')
+
+    const currentTime = ref(0)
 
     const mp4url = 'https://media.vimejs.com/720p.mp4'
     const m3u8Url = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
@@ -91,14 +104,17 @@ export default defineComponent({
     // 历史记录按钮点击事件
     function historyBtnEvent () {
       show.history = true
+      getHistory()
     }
     // 收藏记录按钮点击事件
     function starBtnEvent () {
       show.star = true
+      getStar()
     }
     // 设置按钮点击事件
     function settingBtnEvent () {
       show.setting = true
+      getSetting()
     }
     // 播放事件
     function enterEvent () {
@@ -129,10 +145,51 @@ export default defineComponent({
         size.value = '50%'
       }
     }
+    // 获取用户设置
     async function getSetting () {
       const res = await settingDB.find()
-      console.log(res, 'setting')
+      if (res) {
+        setting.language = res.language
+        setting.history = res.history
+      }
     }
+    // 获取收藏夹
+    async function getStar () {
+      const res = await starDB.all()
+      if (res) {
+        star.value = res
+      }
+    }
+    // 获取播放记录
+    async function getHistory() {
+      const res = await historyDB.all()
+      if (res) {
+        history.value = res
+      }
+    }
+    // 播放进度更新事件
+    function onTimeUpdate (time: any) {
+      currentTime.value = time
+      if (setting.history) {
+        historyUpdate()
+      }
+    }
+    // 播放时更新历史记录里数据
+    const historyUpdate = throttle(async () => {
+      const h = await historyDB.find(url.input)
+      const doc = {
+        name: 'name',
+        url: url.input,
+        host: url.host,
+        date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        time: currentTime.value
+      }
+      if (h && h.id) {
+        historyDB.update(h.id, doc)
+      } else {
+        historyDB.add(doc)
+      }
+    }, 5000)
 
     onMounted(() => {
       window.onresize = () => {
@@ -149,11 +206,13 @@ export default defineComponent({
       show,
       player,
       size,
+      currentTime,
       linkBtnEvent,
       historyBtnEvent,
       starBtnEvent,
       settingBtnEvent,
-      enterEvent
+      enterEvent,
+      onTimeUpdate
     }
   }
 })

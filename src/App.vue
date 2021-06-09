@@ -20,7 +20,8 @@
       </el-row>
       <el-row class="player-box" type="flex" v-show="show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24" class="box">
-          <Player playsinline controls autoplay :currentTime="currentTime" @vmCurrentTimeChange="onTimeUpdate" ref="player">
+          <!-- autoplay -->
+          <Player playsinline controls :currentTime="currentTime" @vmCurrentTimeChange="onTimeUpdate" ref="player">
             <Video v-if="show.mp4">
               <source :data-src="url.mp4" type="video/mp4" />
             </Video>
@@ -33,7 +34,20 @@
     </el-main>
     <!-- 抽屉：播放记录 -->
     <el-drawer :title="t('title.history')" :size="size" v-model="show.history" direction="rtl">
-      <span>lala</span>
+      <el-table :data="db.history" stripe height="100%" fit>
+        <el-table-column prop="name" :label="t('title.name')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="date" :label="t('title.date')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="t('title.host')">
+          <template #default="scope">
+            <el-button size="mini" @click="hostHandleOpen(scope.row)">{{t('btn.open')}}</el-button>
+          </template>
+        </el-table-column>
+        <el-table-column :label="t('title.operate')">
+          <template #default="scope">
+            <el-button size="mini" @click="historyHandleDelete(scope.row)">{{t('btn.delete')}}</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-drawer>
     <!-- 抽屉：收藏夹 -->
     <el-drawer :title="t('title.star')" :size="size" v-model="show.star" direction="rtl">
@@ -47,7 +61,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref } from 'vue'
+import { defineComponent, onMounted, reactive, ref, toRefs } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Player, Video, Hls } from '@vime/vue-next'
 import '@vime/core/themes/default.css'
@@ -85,16 +99,16 @@ export default defineComponent({
       language: 'cn',
       history: false
     })
-    const star = ref<IStar[]>([])
-    const history = ref<IHistory[]>([])
+    const db = reactive({
+      star: [] as IStar[],
+      history: [] as IHistory[]
+    })
     const size = ref('100%')
 
     const currentTime = ref(0)
 
     const mp4url = 'https://media.vimejs.com/720p.mp4'
     const m3u8Url = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
-
-    const player = ref<HTMLVmPlayerElement | null>(null)
 
     // 获取链接的参数
     function getUrlParam (e: string) {
@@ -181,7 +195,7 @@ export default defineComponent({
     async function getHistory() {
       const res = await historyDB.all()
       if (res) {
-        history.value = res
+        db.history = res
       }
     }
     // 播放进度更新事件
@@ -195,41 +209,61 @@ export default defineComponent({
     const historyUpdate = throttle(async () => {
       const h = await historyDB.find(url.input)
       const doc = {
-        name: 'name',
+        name: '',
         url: url.input,
         host: url.host,
         date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         time: currentTime.value
       }
       if (h && h.id) {
+        doc.name = h.name
         historyDB.update(h.id, doc)
       } else {
+        doc.name = '- -'
         historyDB.add(doc)
       }
     }, 5000)
+    // 播放记录删除
+    async function historyHandleDelete (h: IHistory) {
+      if (h.id) {
+        await historyDB.remove(h.id)
+        await getHistory()
+        ElMessage.success(t('msg.delete-success'))
+      }
+    }
+    // 新窗口打开来源的网址
+    function hostHandleOpen (e: IHistory | IStar) {
+      if (e.host) {
+        window.open(e.host)
+      }
+    } 
 
     onMounted(() => {
       getUrlInfo()
       getSetting()
+      getWinSize()
       window.onresize = () => {
         getWinSize()
       }
     })
 
     return {
+      db,
       t,
       locale,
       url,
       show,
-      player,
       size,
+      history,
       currentTime,
       linkBtnEvent,
       historyBtnEvent,
       starBtnEvent,
       settingBtnEvent,
       enterEvent,
-      onTimeUpdate
+      onTimeUpdate,
+      hostHandleOpen,
+      historyHandleDelete
     }
   }
 })

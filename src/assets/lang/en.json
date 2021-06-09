@@ -4,7 +4,11 @@
     "history": "Playback record",
     "star": "Favorites",
     "setting": "Settings",
-    "play": "Play!"
+    "play": "Play!",
+    "name": "Name",
+    "host": "From",
+    "date": "Date",
+    "operate": "Operate"
   },
   "url": {
     "input": "Please enter the video link...",
@@ -12,5 +16,11 @@
     "correct": "The link is correct, loading...",
     "incorrect": "The link is incorrect. Please check and try again..."
   },
-  "name": "name - en"
+  "btn": {
+    "open": "Open",
+    "delete": "Delete"
+  },
+  "msg": {
+    "delete-success": "Successfully deleted"
+  }
 }

@@ -11,8 +11,11 @@ import {
   ElIcon,
   ElButton,
   ElInput,
-  ElDrawer
+  ElDrawer,
+  ElTable,
+  ElTableColumn
 } from 'element-plus'
+import 'element-plus/lib/theme-chalk/index.css'
 
 const i18n = createI18n({
   locale: 'en',
@@ -20,6 +23,9 @@ const i18n = createI18n({
 })
 
 const app = createApp(App)
-app.use(i18n)
-app.use(ElContainer).use(ElHeader).use(ElMain).use(ElRow).use(ElCol).use(ElIcon).use(ElButton).use(ElInput).use(ElDrawer)
+
+app.use(i18n).use(ElContainer).use(ElHeader).use(ElMain)
+.use(ElRow).use(ElCol).use(ElIcon).use(ElButton)
+.use(ElInput).use(ElDrawer).use(ElTable).use(ElTableColumn)
+
 app.mount('#app')

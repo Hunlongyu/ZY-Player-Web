@@ -17,7 +17,7 @@
       </el-row>
       <el-row class="player-box" type="flex" v-show="show.player">
         <el-col :lg="10" :md="12" :sm="16" :xs="24" class="box">
-          <player playsinline controls autoplay ref="player">
+          <Player playsinline controls autoplay ref="player">
             <Video v-if="show.mp4">
               <source :data-src="url.mp4" type="video/mp4" />
             </Video>

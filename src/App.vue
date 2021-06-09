@@ -47,6 +47,7 @@ import { useI18n } from 'vue-i18n'
 import { Player, Video, Hls } from '@vime/vue-next'
 import '@vime/core/themes/default.css'
 import { ElMessage } from 'element-plus'
+import { historyDB, starDB, settingDB } from './database/dexie'
 
 export default defineComponent({
   name: 'App',
@@ -69,6 +70,10 @@ export default defineComponent({
       player: false,
       hls: false,
       mp4: false
+    })
+    const setting = reactive({
+      language: 'cn',
+      history: false
     })
     const size = ref('100%')
 
@@ -115,7 +120,6 @@ export default defineComponent({
         ElMessage.warning(t('url.incorrect'))
       }
     }
-
     // 通过判断设置抽屉的宽度
     function getWinSize () {
       const w = window.screen.width
@@ -125,11 +129,16 @@ export default defineComponent({
         size.value = '50%'
       }
     }
+    async function getSetting () {
+      const res = await settingDB.find()
+      console.log(res, 'setting')
+    }
 
     onMounted(() => {
       window.onresize = () => {
         getWinSize()
       }
+      getSetting()
       console.log(player)
     })
 

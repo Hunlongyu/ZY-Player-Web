@@ -70,6 +70,7 @@ export default defineComponent({
       input: '',
       hls: 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8',
       mp4: '',
+      name: '',
       host: ''
     })
     const show = reactive({
@@ -95,26 +96,27 @@ export default defineComponent({
 
     const player = ref<HTMLVmPlayerElement | null>(null)
 
+    // 获取链接的参数
+    function getUrlParam (e: string) {
+      const reg = new RegExp('(^|&)' + e + '=([^&]*)(&|$)', 'i')
+      const r = window.location.search.substr(1).match(reg)
+      if (r !== null) return decodeURI(r[2])
+      return null
+    }
+    // 进入页面首先获取链接里的参数
+    function getUrlInfo () {
+      url.input = getUrlParam('url') || ''
+      url.name = getUrlParam('name') || ''
+      url.host = getUrlParam('host') || ''
+      if (url.input !== '') {
+        enterEvent()
+      }
+    }
     // 返回输入框
     function linkBtnEvent () {
       show.player = false
       show.hls = false
       show.mp4 = false
-    }
-    // 历史记录按钮点击事件
-    function historyBtnEvent () {
-      show.history = true
-      getHistory()
-    }
-    // 收藏记录按钮点击事件
-    function starBtnEvent () {
-      show.star = true
-      getStar()
-    }
-    // 设置按钮点击事件
-    function settingBtnEvent () {
-      show.setting = true
-      getSetting()
     }
     // 播放事件
     function enterEvent () {
@@ -144,6 +146,21 @@ export default defineComponent({
       } else {
         size.value = '50%'
       }
+    }
+    // 历史记录按钮点击事件
+    function historyBtnEvent () {
+      show.history = true
+      getHistory()
+    }
+    // 收藏记录按钮点击事件
+    function starBtnEvent () {
+      show.star = true
+      getStar()
+    }
+    // 设置按钮点击事件
+    function settingBtnEvent () {
+      show.setting = true
+      getSetting()
     }
     // 获取用户设置
     async function getSetting () {
@@ -192,11 +209,11 @@ export default defineComponent({
     }, 5000)
 
     onMounted(() => {
+      getUrlInfo()
+      getSetting()
       window.onresize = () => {
         getWinSize()
       }
-      getSetting()
-      console.log(player)
     })
 
     return {

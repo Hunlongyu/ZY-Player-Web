@@ -21,7 +21,7 @@ import {
 import 'element-plus/lib/theme-chalk/index.css'
 
 const i18n = createI18n({
-  locale: 'en',
+  locale: 'cn',
   messages
 })
 

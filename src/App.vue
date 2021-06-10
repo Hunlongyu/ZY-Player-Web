@@ -115,7 +115,7 @@ export default defineComponent({
   setup () {
     const { t, locale } = useI18n()
     const url = reactive({
-      input: 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8',
+      input: '',
       hls: '',
       mp4: '',
       name: '',
@@ -231,6 +231,7 @@ export default defineComponent({
       if (res) {
         setting.language = res.language
         setting.history = res.history
+        locale.value = res.language
       }
     }
     // 获取收藏夹
@@ -342,6 +343,7 @@ export default defineComponent({
     // 切换语言
     function handleCommand (c: string) {
       locale.value = c
+      settingDB.update({ language: c, history: true })
     }
 
     onMounted(() => {

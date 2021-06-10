@@ -37,21 +37,28 @@
       <el-table :data="db.history" stripe height="100%" fit>
         <el-table-column prop="name" :label="t('title.name')" show-overflow-tooltip></el-table-column>
         <el-table-column prop="date" :label="t('title.date')" show-overflow-tooltip></el-table-column>
-        <el-table-column :label="t('title.host')">
-          <template #default="scope">
-            <el-button size="mini" @click="hostHandleOpen(scope.row)">{{t('btn.open')}}</el-button>
-          </template>
-        </el-table-column>
         <el-table-column :label="t('title.operate')">
           <template #default="scope">
-            <el-button size="mini" @click="historyHandleDelete(scope.row)">{{t('btn.delete')}}</el-button>
+            <el-button size="mini" @click="historyHandlePlay(scope.row)" icon="el-icon-video-play" circle></el-button>
+            <el-button size="mini" @click="hostHandleOpen(scope.row)" icon="el-icon-position" circle></el-button>
+            <el-button size="mini" @click="historyHandleDelete(scope.row)" icon="el-icon-delete" circle></el-button>
           </template>
         </el-table-column>
       </el-table>
     </el-drawer>
     <!-- 抽屉：收藏夹 -->
     <el-drawer :title="t('title.star')" :size="size" v-model="show.star" direction="rtl">
-      <span>lala</span>
+      <el-table :data="db.star" stripe height="100%" fit>
+        <el-table-column prop="name" :label="t('title.name')" show-overflow-tooltip></el-table-column>
+        <el-table-column prop="date" :label="t('title.date')" show-overflow-tooltip></el-table-column>
+        <el-table-column :label="t('title.operate')">
+          <template #default="scope">
+            <el-button size="mini" @click="historyHandlePlay(scope.row)" icon="el-icon-video-play" circle></el-button>
+            <el-button size="mini" @click="hostHandleOpen(scope.row)" icon="el-icon-position" circle></el-button>
+            <el-button size="mini" @click="historyHandleDelete(scope.row)" icon="el-icon-delete" circle></el-button>
+          </template>
+        </el-table-column>
+      </el-table>
     </el-drawer>
     <!-- 抽屉：设置 -->
     <el-drawer :title="t('title.setting')" :size="size" v-model="show.setting" direction="rtl">
@@ -81,8 +88,8 @@ export default defineComponent({
   setup () {
     const { t, locale } = useI18n()
     const url = reactive({
-      input: '',
-      hls: 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8',
+      input: 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8',
+      hls: '',
       mp4: '',
       name: '',
       host: ''
@@ -91,8 +98,8 @@ export default defineComponent({
       history: false,
       star: false,
       setting: false,
-      player: true,
-      hls: true,
+      player: false,
+      hls: false,
       mp4: false
     })
     const setting = reactive({
@@ -188,7 +195,7 @@ export default defineComponent({
     async function getStar () {
       const res = await starDB.all()
       if (res) {
-        star.value = res
+        db.star = res
       }
     }
     // 获取播放记录
@@ -231,6 +238,8 @@ export default defineComponent({
         ElMessage.success(t('msg.delete-success'))
       }
     }
+    // 点击播放记录播放视频
+    async function historyHandlePlay (h: IHistory) {}
     // 新窗口打开来源的网址
     function hostHandleOpen (e: IHistory | IStar) {
       if (e.host) {
@@ -254,7 +263,6 @@ export default defineComponent({
       url,
       show,
       size,
-      history,
       currentTime,
       linkBtnEvent,
       historyBtnEvent,
@@ -262,6 +270,7 @@ export default defineComponent({
       settingBtnEvent,
       enterEvent,
       onTimeUpdate,
+      historyHandlePlay,
       hostHandleOpen,
       historyHandleDelete
     }

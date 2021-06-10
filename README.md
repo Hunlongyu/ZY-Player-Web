@@ -31,11 +31,13 @@
 - 🍕 页面自适应支持电脑端浏览器，和手机端浏览器
 - 🌭 支持播放记录功能, 自动跳转历史播放进度
 - 🍿 支持收藏夹功能
+- 🍖 多语言（中文、英文）
+- 🍘 画中画模式
 
 ### 🎨 截图
 
 |                      🥼 主页                       |                      🧥 播放记录                       |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| ![01.png](https://i.loli.net/2020/11/28/MSREGoWUpaBXQJ1.png) | ![02.png](https://i.loli.net/2020/11/28/Gb3z5ivLjSqXUN7.png) |
+| ![01.png](https://i.loli.net/2021/06/10/7DtOZgPLf8lUcY6.png) | ![02.png](https://i.loli.net/2021/06/10/Rxl2PBMCVAu1mwZ.png) |
 |                            👔 收藏                            |                            👕 设置                            |
-| ![03.png](https://i.loli.net/2020/11/28/kuOYhoQ3KaNzFSt.png) | ![04.png](https://i.loli.net/2020/11/28/GqbEvRf9YS7n5aL.png) |
+| ![03.png](https://i.loli.net/2021/06/10/wsOMPQ5GU8n1vEB.png) | ![04.png](https://i.loli.net/2021/06/10/2BtVfHMqD5QlcRZ.png) |

@@ -21,6 +21,8 @@
     "delete": "删除"
   },
   "msg": {
-    "delete-success": "删除成功"
+    "delete-success": "删除成功",
+    "star-add": "添加到收藏夹成功",
+    "star-remove": "从收藏夹移除成功"
   }
 }

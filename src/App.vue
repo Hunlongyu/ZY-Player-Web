@@ -29,6 +29,9 @@
               <source :data-src="url.hls" type="application/x-mpegURL" />
             </Hls>
           </Player>
+          <span @click="addStar">
+            <svg t="1606442580426" :title="t('title.star')" class="icon-star" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="3119" width="21" height="21"><path d="M755.2 64c-107.616 0-200.256 87.552-243.168 179.008C469.088 151.552 376.448 64 268.8 64 120.416 64 0 184.448 0 332.832c0 301.856 304.512 380.992 512.032 679.424C708.192 715.68 1024 625.056 1024 332.832 1024 184.448 903.584 64 755.2 64z" p-id="3120" fill="#ffffff"></path></svg>
+          </span>
         </el-col>
       </el-row>
     </el-main>
@@ -53,9 +56,9 @@
         <el-table-column prop="date" :label="t('title.date')" show-overflow-tooltip></el-table-column>
         <el-table-column :label="t('title.operate')">
           <template #default="scope">
-            <el-button size="mini" @click="historyHandlePlay(scope.row)" icon="el-icon-video-play" circle></el-button>
+            <el-button size="mini" @click="starHandlePlay(scope.row)" icon="el-icon-video-play" circle></el-button>
             <el-button size="mini" @click="hostHandleOpen(scope.row)" icon="el-icon-position" circle></el-button>
-            <el-button size="mini" @click="historyHandleDelete(scope.row)" icon="el-icon-delete" circle></el-button>
+            <el-button size="mini" @click="starHandleDelete(scope.row)" icon="el-icon-delete" circle></el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -68,13 +71,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, reactive, ref, toRefs } from 'vue'
+import { defineComponent, nextTick, onMounted, reactive, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { Player, Video, Hls } from '@vime/vue-next'
 import '@vime/core/themes/default.css'
 import { ElMessage } from 'element-plus'
 import { historyDB, starDB, settingDB } from './database/dexie'
-import { IHistory, IStar, ISetting } from './database/types'
+import { IHistory, IStar } from './database/types'
 import { throttle } from 'lodash'
 import dayjs from 'dayjs'
 
@@ -114,8 +117,7 @@ export default defineComponent({
 
     const currentTime = ref(0)
 
-    const mp4url = 'https://media.vimejs.com/720p.mp4'
-    const m3u8Url = 'https://zk2.cdt-md.com/2020/12/03/TDJL3BvExyg0muZr/playlist.m3u8'
+    const player = ref<HTMLVmPlayerElement | null>(null)
 
     // 获取链接的参数
     function getUrlParam (e: string) {
@@ -150,14 +152,30 @@ export default defineComponent({
         url.hls = url.input
         show.player = true
         show.hls = true
+        checkHistory(url.input)
       } else if (url.input.indexOf('.mp4') !== -1) {
         show.hls = false
         url.mp4 = url.input
         show.player = true
         show.mp4 = true
+        checkHistory(url.input)
       } else {
         ElMessage.warning(t('url.incorrect'))
       }
+    }
+    // 播放前检查是否有历史记录，跳转到历史的时间节点上
+    async function checkHistory (url: string) {
+      const h = await historyDB.find(url)
+      if (h) {
+        currentTime.value = h.time
+      } else {
+        currentTime.value = 0
+      }
+      await nextTick()
+      if (player && player.value) {
+        player.value.play()
+      }
+      checkStar()
     }
     // 通过判断设置抽屉的宽度
     function getWinSize () {
@@ -226,7 +244,7 @@ export default defineComponent({
         doc.name = h.name
         historyDB.update(h.id, doc)
       } else {
-        doc.name = '- -'
+        doc.name = url.name || '- -'
         historyDB.add(doc)
       }
     }, 5000)
@@ -239,13 +257,64 @@ export default defineComponent({
       }
     }
     // 点击播放记录播放视频
-    async function historyHandlePlay (h: IHistory) {}
+    async function historyHandlePlay (h: IHistory) {
+      if (h.url) {
+        url.input = h.url
+        enterEvent()
+      }
+      show.history = false
+    }
     // 新窗口打开来源的网址
     function hostHandleOpen (e: IHistory | IStar) {
       if (e.host) {
         window.open(e.host)
       }
-    } 
+    }
+    // 点击收藏夹播放视频
+    function starHandlePlay (s: IStar) {
+      if (s.url) {
+        url.input = s.url
+        enterEvent()
+      }
+      show.star = false
+    }
+    // 收藏夹删除
+    async function starHandleDelete (s: IStar) {
+      if (s.id) {
+        await starDB.remove(s.id)
+        await getStar()
+        ElMessage.success(t('msg.delete-success'))
+      }
+    }
+    // 检查是否已收藏过
+    async function checkStar () {
+      const res = await starDB.find(url.input)
+      if (res) {
+        const dom = document.querySelector('.icon-star')
+        dom?.classList.add('active')
+      } else {
+        const dom = document.querySelector('.icon-star')
+        dom?.classList.remove('active')
+      }
+    }
+    // 添加到收藏夹
+    async function addStar () {
+      const res = await starDB.find(url.input)
+      if (res && res.id) {
+        starDB.remove(res.id)
+      } else {
+        const doc = {
+          name: url.name || '- -',
+          url: url.input,
+          host: url.host,
+          date: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+          time: currentTime.value
+        }
+        starDB.add(doc)
+        ElMessage.success(t('msg.star-add'))
+      }
+      checkStar()
+    }
 
     onMounted(() => {
       getUrlInfo()
@@ -264,6 +333,7 @@ export default defineComponent({
       show,
       size,
       currentTime,
+      player,
       linkBtnEvent,
       historyBtnEvent,
       starBtnEvent,
@@ -272,7 +342,10 @@ export default defineComponent({
       onTimeUpdate,
       historyHandlePlay,
       hostHandleOpen,
-      historyHandleDelete
+      historyHandleDelete,
+      starHandlePlay,
+      starHandleDelete,
+      addStar
     }
   }
 })

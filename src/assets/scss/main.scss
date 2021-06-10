@@ -22,5 +22,17 @@ html,body{
       justify-content: center;
       align-items: center;
     }
+    .icon-star{
+      cursor: pointer;
+      margin: 10px auto;
+      path{
+        fill: #adadad;
+      }
+      &.active{
+        path{
+          fill: red;
+        }
+      }
+    }
   }
 }

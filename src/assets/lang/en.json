@@ -23,7 +23,8 @@
   "msg": {
     "delete-success": "Successfully deleted",
     "star-add": "Add to Favorites succeeded",
-    "star-remove": "Successfully removed from favorites"
+    "star-remove": "Successfully removed from favorites",
+    "clear-success": "Clear successfully"
   },
   "lang": {
     "select": "Language",

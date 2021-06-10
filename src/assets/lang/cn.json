@@ -23,7 +23,8 @@
   "msg": {
     "delete-success": "删除成功",
     "star-add": "添加到收藏夹成功",
-    "star-remove": "从收藏夹移除成功"
+    "star-remove": "从收藏夹移除成功",
+    "clear-success": "清空成功"
   },
   "lang": {
     "select": "语言",

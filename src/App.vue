@@ -87,7 +87,10 @@
             <a href="https://github.com/Hunlongyu/ZY-Player-APP" target="_blank">手机端</a>
           </p>
         </div>
-        <div class="setting-item"><el-button>清空播放记录</el-button><el-button>清空收藏夹</el-button></div>
+        <div class="setting-item">
+          <el-button size="small" @click="clearHistory">清空播放记录</el-button>
+          <el-button size="small" @click="clearStar">清空收藏夹</el-button>
+        </div>
         <div class="setting-item">所有资源来自网上, 该软件不参与任何制作, 上传等内容. 该软件仅供学习参考, 请于安装后24小时内删除.</div>
       </div>
     </el-drawer>
@@ -345,6 +348,14 @@ export default defineComponent({
       locale.value = c
       settingDB.update({ language: c, history: true })
     }
+    async function clearHistory () {
+      await historyDB.clear()
+      ElMessage.success(t('msg.clear-success'))
+    }
+    async function clearStar () {
+      await starDB.clear()
+      ElMessage.success(t('msg.clear-success'))
+    }
 
     onMounted(() => {
       getUrlInfo()
@@ -376,7 +387,9 @@ export default defineComponent({
       starHandlePlay,
       starHandleDelete,
       addStar,
-      handleCommand
+      handleCommand,
+      clearHistory,
+      clearStar
     }
   }
 })

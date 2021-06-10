@@ -1,8 +1,14 @@
 {
-  "version": "0.0.0",
+  "name": "zyplayerweb",
+  "author": {
+    "name": "hunlongyu",
+    "email": "hunlongyu@gmail.com"
+  },
+  "version": "1.0.0",
+  "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "vue-tsc --noEmit && vite build",
+    "build": "vue-tsc --noEmit --skipLibCheck && vite build",
     "serve": "vite preview"
   },
   "dependencies": {

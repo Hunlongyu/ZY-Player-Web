@@ -14,7 +14,10 @@ html,body{
     .header{
       display: flex;
       justify-content: flex-end;
-      align-items: flex-end;
+      align-items: center;
+      .language{
+        margin-left: 12px;
+      }
     }
     .input-box, .player-box{
       height: 100%;
@@ -33,6 +36,24 @@ html,body{
           fill: red;
         }
       }
+    }
+  }
+  .setting-body{
+    .logo{
+      text-align: center;
+      img{
+        width: 100px;
+        height: auto;
+      }
+      a{
+        margin: 0 20px;
+        text-decoration: none;
+      }
+      margin-bottom: 30px;
+    }
+    .setting-item{
+      margin-top: 20px;
+      text-align: center;
     }
   }
 }

@@ -2,6 +2,17 @@
   <el-container class="container">
     <!-- 顶部操作按钮 -->
     <el-header class="header">
+      <el-dropdown class="language" @command="handleCommand">
+        <span class="el-dropdown-link">
+          {{t('lang.select')}}<i class="el-icon-arrow-down el-icon--right"></i>
+        </span>
+        <template #dropdown>
+          <el-dropdown-menu>
+            <el-dropdown-item command="cn">{{t('lang.cn')}}</el-dropdown-item>
+            <el-dropdown-item command="en">{{t('lang.en')}}</el-dropdown-item>
+          </el-dropdown-menu>
+        </template>
+      </el-dropdown>
       <el-button v-show="show.player" @click="linkBtnEvent" icon="el-icon-link" circle :title="t('title.link')"></el-button>
       <el-button @click="historyBtnEvent" icon="el-icon-time" circle :title="t('title.history')"></el-button>
       <el-button @click="starBtnEvent" icon="el-icon-star-off" circle :title="t('title.star')"></el-button>
@@ -65,7 +76,20 @@
     </el-drawer>
     <!-- 抽屉：设置 -->
     <el-drawer :title="t('title.setting')" :size="size" v-model="show.setting" direction="rtl">
-      <span>lala</span>
+      <div class="setting-body">
+        <div class="logo">
+          <img src="./assets/img/logo.png" alt="">
+          <h2>ZY Player Web</h2>
+          <p>
+            <a href="https://github.com/Hunlongyu/ZY-Player-Web" target="_blank">Github</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player-Web/issues" target="_blank">反馈</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player" target="_blank">电脑端</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player-APP" target="_blank">手机端</a>
+          </p>
+        </div>
+        <div class="setting-item"><el-button>清空播放记录</el-button><el-button>清空收藏夹</el-button></div>
+        <div class="setting-item">所有资源来自网上, 该软件不参与任何制作, 上传等内容. 该软件仅供学习参考, 请于安装后24小时内删除.</div>
+      </div>
     </el-drawer>
   </el-container>
 </template>
@@ -179,7 +203,7 @@ export default defineComponent({
     }
     // 通过判断设置抽屉的宽度
     function getWinSize () {
-      const w = window.screen.width
+      const w = document.body.offsetWidth
       if (w <= 768) {
         size.value = '100%'
       } else {
@@ -315,6 +339,10 @@ export default defineComponent({
       }
       checkStar()
     }
+    // 切换语言
+    function handleCommand (c: string) {
+      locale.value = c
+    }
 
     onMounted(() => {
       getUrlInfo()
@@ -345,7 +373,8 @@ export default defineComponent({
       historyHandleDelete,
       starHandlePlay,
       starHandleDelete,
-      addStar
+      addStar,
+      handleCommand
     }
   }
 })

@@ -24,5 +24,10 @@
     "delete-success": "Successfully deleted",
     "star-add": "Add to Favorites succeeded",
     "star-remove": "Successfully removed from favorites"
+  },
+  "lang": {
+    "select": "Language",
+    "en": "English",
+    "cn": "简体中文"
   }
 }

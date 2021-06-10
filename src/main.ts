@@ -13,7 +13,10 @@ import {
   ElInput,
   ElDrawer,
   ElTable,
-  ElTableColumn
+  ElTableColumn,
+  ElDropdown,
+  ElDropdownMenu,
+  ElDropdownItem
 } from 'element-plus'
 import 'element-plus/lib/theme-chalk/index.css'
 
@@ -27,5 +30,6 @@ const app = createApp(App)
 app.use(i18n).use(ElContainer).use(ElHeader).use(ElMain)
 .use(ElRow).use(ElCol).use(ElIcon).use(ElButton)
 .use(ElInput).use(ElDrawer).use(ElTable).use(ElTableColumn)
+.use(ElDropdown).use(ElDropdownMenu).use(ElDropdownItem)
 
 app.mount('#app')

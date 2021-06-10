@@ -24,5 +24,10 @@
     "delete-success": "删除成功",
     "star-add": "添加到收藏夹成功",
     "star-remove": "从收藏夹移除成功"
+  },
+  "lang": {
+    "select": "语言",
+    "en": "English",
+    "cn": "简体中文"
   }
 }

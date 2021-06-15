@@ -30,5 +30,12 @@
     "select": "语言",
     "en": "English",
     "cn": "简体中文"
+  },
+  "setting": {
+    "issues": "反馈",
+    "pc": "电脑端",
+    "mobile": "手机端",
+    "clear-history": "清空播放记录",
+    "clear-star": "清空收藏夹"
   }
 }

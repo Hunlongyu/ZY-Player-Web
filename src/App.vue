@@ -82,16 +82,15 @@
           <h2>ZY Player Web</h2>
           <p>
             <a href="https://github.com/Hunlongyu/ZY-Player-Web" target="_blank">Github</a>
-            <a href="https://github.com/Hunlongyu/ZY-Player-Web/issues" target="_blank">反馈</a>
-            <a href="https://github.com/Hunlongyu/ZY-Player" target="_blank">电脑端</a>
-            <a href="https://github.com/Hunlongyu/ZY-Player-APP" target="_blank">手机端</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player-Web/issues" target="_blank">{{t('setting.issues')}}</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player" target="_blank">{{t('setting.pc')}}</a>
+            <a href="https://github.com/Hunlongyu/ZY-Player-APP" target="_blank">{{t('setting.mobile')}}</a>
           </p>
         </div>
         <div class="setting-item">
-          <el-button size="small" @click="clearHistory">清空播放记录</el-button>
-          <el-button size="small" @click="clearStar">清空收藏夹</el-button>
+          <el-button size="small" @click="clearHistory">{{t('setting.clear-history')}}</el-button>
+          <el-button size="small" @click="clearStar">{{t('setting.clear-star')}}</el-button>
         </div>
-        <div class="setting-item">所有资源来自网上, 该软件不参与任何制作, 上传等内容. 该软件仅供学习参考, 请于安装后24小时内删除.</div>
       </div>
     </el-drawer>
   </el-container>

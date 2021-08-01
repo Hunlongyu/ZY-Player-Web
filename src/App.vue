@@ -10,6 +10,7 @@
           <el-dropdown-menu>
             <el-dropdown-item command="cn">{{t('lang.cn')}}</el-dropdown-item>
             <el-dropdown-item command="en">{{t('lang.en')}}</el-dropdown-item>
+            <el-dropdown-item command="zh-tw">{{t('lang.zh-tw')}}</el-dropdown-item>
           </el-dropdown-menu>
         </template>
       </el-dropdown>
@@ -133,6 +134,7 @@ export default defineComponent({
     })
     const setting = reactive({
       language: 'cn',
+      language: 'zh-tw',
       history: false
     })
     const db = reactive({

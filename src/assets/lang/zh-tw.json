@@ -1,0 +1,42 @@
+{
+  "title": {
+    "link": "視頻連結輸入",
+    "history": "播放記錄",
+    "star": "收藏夾",
+    "setting": "設置",
+    "play": "播放",
+    "name": "名稱",
+    "host": "來源",
+    "date": "日期",
+    "operate": "操作"
+  },
+  "url": {
+    "input": "請輸入視頻連結...",
+    "empty": "連結不能為空，請檢查後重試...",
+    "correct": "連結正確，正在加載中...",
+    "incorrect": "連結不正確，請檢查後重試..."
+  },
+  "btn": {
+    "open": "打開",
+    "delete": "刪除"
+  },
+  "msg": {
+    "delete-success": "刪除成功",
+    "star-add": "新增到收藏夾成功",
+    "star-remove": "從收藏夾移除成功",
+    "clear-success": "清空成功"
+  },
+  "lang": {
+    "select": "Language 語言",
+    "en": "English",
+"cn": "簡體中文",
+"tw": "繁體中文"
+  },
+  "setting": {
+    "issues": "回饋",
+    "pc": "電腦端",
+    "mobile": "手機端",
+    "clear-history": "清空播放記錄",
+    "clear-star": "清空收藏夾"
+  }
+}

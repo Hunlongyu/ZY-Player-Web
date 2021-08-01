@@ -27,9 +27,10 @@
     "clear-success": "清空成功"
   },
   "lang": {
-    "select": "语言",
+    "select": "L语言",
     "en": "English",
-    "cn": "简体中文"
+    "cn": "简体中文",
+    "zh-tw": "繁體中文"
   },
   "setting": {
     "issues": "反馈",

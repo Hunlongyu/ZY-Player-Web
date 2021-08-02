@@ -134,7 +134,6 @@ export default defineComponent({
     })
     const setting = reactive({
       language: 'cn',
-      language: 'zh-tw',
       history: false
     })
     const db = reactive({
